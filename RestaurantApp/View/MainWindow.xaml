@@ -29,5 +29,14 @@
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+            <Label Content="Wyszukaj:"
+                   />
+            <TextBox Text="{Binding SearchRestaurantValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}"
+                     Width="100"
+                     />
+        </StackPanel>
     </Grid>
 </Window>
