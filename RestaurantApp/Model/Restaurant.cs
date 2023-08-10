@@ -12,7 +12,7 @@ namespace RestaurantApp.Model
         [Key]
         public int RestaurantId { get; set; }
 
-        public Restaurant(string name, double rating, string openingHour, string closingHour, int adressId)
+        public Restaurant(string name, decimal rating, string openingHour, string closingHour, int adressId)
         {
             Name = name;
             Rating = rating;
@@ -22,7 +22,7 @@ namespace RestaurantApp.Model
         }
 
         public string Name { get; set; }
-        public double Rating { get; set; }
+        public decimal Rating { get; set; }
         public string OpeningHour { get; set; }
         public string ClosingHour { get; set; }
 
