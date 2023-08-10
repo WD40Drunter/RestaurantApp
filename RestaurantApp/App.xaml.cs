@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RestaurantApp.Model;
+using RestaurantApp.Services;
 using RestaurantApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,7 @@ namespace RestaurantApp
                 {
                     options.UseSqlServer(Configuration.GetConnectionString("RestaurantDB"));
                 })
+                    .AddScoped<IRestaurantsService, RestaurantsServices>()
                     .AddTransient<MainWindowViewModel>()
                     .BuildServiceProvider()
                 );

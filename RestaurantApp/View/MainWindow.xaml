@@ -7,14 +7,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListView>
+        <ListView ItemsSource="{Binding RestaurantsCollection}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nazwa restauracji"
+                                    DisplayMemberBinding="{Binding Name}"
                                     />
                     <GridViewColumn Header="Ocena"
+                                    DisplayMemberBinding="{Binding Rating}"
                                     />
                     <GridViewColumn Header="Adres"
+                                    DisplayMemberBinding="{Binding Adress.Country}"
                                     />
                     <GridViewColumn Header="Akcje">
                         <GridViewColumn.CellTemplate>
