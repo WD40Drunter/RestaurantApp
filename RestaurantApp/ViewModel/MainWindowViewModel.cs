@@ -18,8 +18,10 @@ namespace RestaurantApp.ViewModel
         {
             _restaurantsService = restaurantsService;
 
-            GetAllRestaurants();
-            CreateRestaurantsCollection();
+            CollectionCreator = new ();
+
+            RestaurantsList = new ObservableCollection<Restaurant>(_restaurantsService.GetAll());
+            RestaurantsCollection = CollectionCreator.GetCollection(RestaurantsList);
         }
         private readonly IRestaurantsService _restaurantsService;
 
@@ -32,26 +34,7 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private string? _searchRestaurantValue;
 
-        public void GetAllRestaurants()
-        {
-            RestaurantsList = new ObservableCollection<Restaurant>(_restaurantsService.GetAll());
-        }
-
-        public void CreateRestaurantsCollection()
-        {
-            RestaurantsCollection = CollectionViewSource.GetDefaultView(RestaurantsList);
-            RestaurantsCollection.SortDescriptions.Add(new SortDescription(nameof(Restaurant.Name), ListSortDirection.Ascending));
-            RestaurantsCollection.Filter = FilterRestaurants;
-        }
-
-        private bool FilterRestaurants(object obj)
-        {
-            if (obj is not Restaurant restaurant)
-            {
-                return false;
-            }
-            return restaurant.Name.Contains(SearchRestaurantValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
-        }
+        public CollectionCreator CollectionCreator { get; set; }
 
         public void RefreshRestaurantsCollection()
         {
@@ -60,6 +43,7 @@ namespace RestaurantApp.ViewModel
 
         partial void OnSearchRestaurantValueChanged(string? value)
         {
+            CollectionCreator.SearchRestaurantValue = value;
             RefreshRestaurantsCollection();
         }
     }
