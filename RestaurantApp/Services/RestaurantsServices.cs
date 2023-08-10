@@ -1,4 +1,5 @@
-﻿using RestaurantApp.Model;
+﻿using Microsoft.EntityFrameworkCore;
+using RestaurantApp.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace RestaurantApp.Services
 
         public IEnumerable<Restaurant> GetAll()
         {
-            return _context.Restaurants;
+            return _context.Restaurants.Include(x => x.Adress);
         }
     }
 }

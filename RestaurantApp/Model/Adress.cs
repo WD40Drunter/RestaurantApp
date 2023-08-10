@@ -26,5 +26,9 @@ namespace RestaurantApp.Model
         public string Street { get; set; }
         public string HouseNumber { get; set; }
         public string PostalCode { get; set; }
+        public string FullAdress { get
+            {
+                return $"{Country} {City} ul.{Street} {HouseNumber} Kod pocztowy:{PostalCode}";
+            } }
     }
 }
