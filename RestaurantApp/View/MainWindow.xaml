@@ -7,6 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ListView>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Nazwa restauracji"
+                                    />
+                    <GridViewColumn Header="Ocena"
+                                    />
+                    <GridViewColumn Header="Adres"
+                                    />
+                    <GridViewColumn Header="Akcje">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <Button Content="Menu"/>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
