@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using RestaurantApp.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,8 @@ namespace RestaurantApp
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = Ioc.Default.GetRequiredService<MainWindowViewModel>();
         }
     }
 }
