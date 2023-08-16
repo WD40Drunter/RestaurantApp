@@ -50,6 +50,7 @@
                    />
                 <PasswordBox x:Name="PasswordInput"
                              PasswordChar="*"
+                             Width="100"
                              />
             </StackPanel>
             <Button Content="Login"
