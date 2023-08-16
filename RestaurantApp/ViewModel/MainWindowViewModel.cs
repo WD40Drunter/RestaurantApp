@@ -1,6 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
+using RestaurantApp.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,8 +26,12 @@ namespace RestaurantApp.ViewModel
 
             RestaurantsList = new ObservableCollection<Restaurant>(_restaurantsService.GetAll());
             RestaurantsCollection = CollectionCreator.GetCollection(RestaurantsList);
+
+            OpenMenuWindowCommand = new RelayCommand<int>(OpenMenuWindow);
         }
         private readonly IRestaurantsService _restaurantsService;
+
+        public IRelayCommand<int> OpenMenuWindowCommand { get; }
 
         [ObservableProperty]
         private ObservableCollection<Restaurant>? _restaurantsList;
@@ -41,10 +49,18 @@ namespace RestaurantApp.ViewModel
             RestaurantsCollection?.Refresh();
         }
 
+        public static void OpenMenuWindow(int restaurantId)
+        {
+            RestaurantMenu restaurantMenu = new();
+            restaurantMenu.Show();
+            WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurantId));
+        }
+
         partial void OnSearchRestaurantValueChanged(string? value)
         {
             CollectionCreator.SearchRestaurantValue = value;
             RefreshRestaurantsCollection();
         }
+
     }
 }

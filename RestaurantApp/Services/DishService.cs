@@ -11,6 +11,7 @@ namespace RestaurantApp.Services
     public interface IDishService
     {
         IEnumerable<Dish> GetAll();
+        IEnumerable<Dish> GetSelected(int restaurantId);
     }
     public class DishService : IDishService
     {
@@ -23,6 +24,11 @@ namespace RestaurantApp.Services
         public IEnumerable<Dish> GetAll()
         {
                 return _context.Dishes.Include(x => x.Restaurant);
+        }
+
+        public IEnumerable<Dish> GetSelected(int restaurantId)
+        {
+                return _context.Dishes.Where(x => x.RestaurantId == restaurantId).Include(x => x.Restaurant);
         }
     }
 }

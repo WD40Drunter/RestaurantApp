@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System;
@@ -18,8 +20,11 @@ namespace RestaurantApp.ViewModel
             _dishService = dishService;
             CollectionCreator = new ();
 
-            DishesList = new (_dishService.GetAll());
-            DishesCollection = CollectionCreator.GetCollection(DishesList);
+            WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
+            {
+                DishesList = new(_dishService.GetSelected(m.Value));
+                DishesCollection = CollectionCreator.GetCollection(DishesList);
+            });
 
         }
         private readonly IDishService _dishService;
@@ -29,7 +34,7 @@ namespace RestaurantApp.ViewModel
         private ObservableCollection<Dish>? _dishesList;
 
         [ObservableProperty]
-        private ICollectionView _dishesCollection;
+        private ICollectionView? _dishesCollection;
 
         [ObservableProperty]
         private string? _searchDishValue;
