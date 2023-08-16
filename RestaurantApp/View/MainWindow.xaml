@@ -48,12 +48,12 @@
                         Orientation="Horizontal">
                 <Label Content="Hasło:"
                    />
-                <TextBox Text="{Binding InputPassword}"
-                     Width="100"
-                     />
+                <PasswordBox x:Name="PasswordInput"
+                             PasswordChar="*"
+                             />
             </StackPanel>
             <Button Content="Login"
-                    Command="{Binding LoginCommand}"
+                    Click="LoginButton_Click"
                     Width="50"
                     Height="30"
                     Margin="5"

@@ -31,13 +31,17 @@ namespace RestaurantApp.ViewModel
             RestaurantsCollection = CollectionCreator.GetCollection(RestaurantsList);
 
             OpenMenuWindowCommand = new RelayCommand<object?>(OpenMenuWindow);
-            LoginCommand = new RelayCommand(Login);
+
+            WeakReferenceMessenger.Default.Register<PasswordMessage>(this, (r, m) =>
+            {
+                InputPassword = m.Value;
+                Login();
+            });
         }
         private readonly IRestaurantsService _restaurantsService;
         private readonly IUserService _userService;
 
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
-        public IRelayCommand LoginCommand { get; }
 
         [ObservableProperty]
         private ObservableCollection<Restaurant>? _restaurantsList;
