@@ -23,6 +23,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Menu"
+                                        Command="{Binding OpenMenuWindowCommand}"
+                                        CommandParameter="{Binding RestaurantId}"
                                         />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

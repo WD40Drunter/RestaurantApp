@@ -43,7 +43,9 @@ namespace RestaurantApp
                     options.UseSqlServer(Configuration.GetConnectionString("RestaurantDB"));
                 })
                     .AddScoped<IRestaurantsService, RestaurantsServices>()
+                    .AddScoped<IDishService, DishService>()
                     .AddTransient<MainWindowViewModel>()
+                    .AddTransient<RestaurantMenuViewModel>()
                     .BuildServiceProvider()
                 );
         }
