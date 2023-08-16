@@ -47,6 +47,7 @@ namespace RestaurantApp
                     .AddScoped<IUserService, UserService>()
                     .AddTransient<MainWindowViewModel>()
                     .AddTransient<RestaurantMenuViewModel>()
+                    .AddTransient<RegisterWindowViewModel>()
                     .BuildServiceProvider()
                 );
         }
