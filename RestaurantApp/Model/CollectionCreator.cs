@@ -17,6 +17,7 @@ namespace RestaurantApp.Model
         }
         
         public string? SearchRestaurantValue { get; set; }
+        public string? SearchDishValue { get; set; }
 
         public ICollectionView GetCollection(ObservableCollection<Restaurant>? collection)
         {
@@ -33,6 +34,23 @@ namespace RestaurantApp.Model
                 return false;
             }
             return restaurant.Name.Contains(SearchRestaurantValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        public ICollectionView GetCollection(ObservableCollection<Dish>? collection)
+        {
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(collection);
+            collectionView.SortDescriptions.Add(new SortDescription(nameof(Restaurant.Name), ListSortDirection.Ascending));
+            collectionView.Filter = FilterDishes;
+            return collectionView;
+        }
+
+        private bool FilterDishes(object obj)
+        {
+            if (obj is not Dish dish)
+            {
+                return false;
+            }
+            return dish.Name.Contains(SearchRestaurantValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }
