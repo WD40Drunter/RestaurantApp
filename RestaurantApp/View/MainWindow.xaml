@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <ListView ItemsSource="{Binding RestaurantsCollection}">
+        <ListView x:Name="MyList"
+                  ItemsSource="{Binding RestaurantsCollection}">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nazwa restauracji"
@@ -23,8 +24,8 @@
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <Button Content="Menu"
-                                        Command="{Binding OpenMenuWindowCommand}"
-                                        CommandParameter="{Binding RestaurantId}"
+                                        Command="{Binding ElementName=MyList, Path=DataContext.OpenMenuWindowCommand}"
+                                        CommandParameter="{Binding }"
                                         />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

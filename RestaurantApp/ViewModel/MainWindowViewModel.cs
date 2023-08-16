@@ -27,11 +27,11 @@ namespace RestaurantApp.ViewModel
             RestaurantsList = new ObservableCollection<Restaurant>(_restaurantsService.GetAll());
             RestaurantsCollection = CollectionCreator.GetCollection(RestaurantsList);
 
-            OpenMenuWindowCommand = new RelayCommand<int>(OpenMenuWindow);
+            OpenMenuWindowCommand = new RelayCommand<object?>(OpenMenuWindow);
         }
         private readonly IRestaurantsService _restaurantsService;
 
-        public IRelayCommand<int> OpenMenuWindowCommand { get; }
+        public IRelayCommand<object?> OpenMenuWindowCommand { get; }
 
         [ObservableProperty]
         private ObservableCollection<Restaurant>? _restaurantsList;
@@ -49,11 +49,12 @@ namespace RestaurantApp.ViewModel
             RestaurantsCollection?.Refresh();
         }
 
-        public static void OpenMenuWindow(int restaurantId)
+        public static void OpenMenuWindow(object? obj)
         {
+            Restaurant? restaurant = obj as Restaurant;
             RestaurantMenu restaurantMenu = new();
             restaurantMenu.Show();
-            WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurantId));
+            WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurant?.RestaurantId));
         }
 
         partial void OnSearchRestaurantValueChanged(string? value)
