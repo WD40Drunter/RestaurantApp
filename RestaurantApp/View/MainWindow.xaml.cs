@@ -30,5 +30,10 @@ namespace RestaurantApp
 
             DataContext = Ioc.Default.GetRequiredService<MainWindowViewModel>();
         }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default.Send(new PasswordMessage(PasswordInput.Password));
+        }
     }
 }
