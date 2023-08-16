@@ -11,7 +11,7 @@ namespace RestaurantApp.Model
     public class Dish
     {
         [Key]
-        public int DishId { get; set; }
+        public long DishId { get; set; }
 
         public Dish(string name, string status, int restaurantId)
         {

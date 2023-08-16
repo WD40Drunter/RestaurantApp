@@ -3,10 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:RestaurantApp.View" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignData Type=viewmodel:RestaurantMenuViewModel}"
+        xmlns:local="clr-namespace:RestaurantApp.View" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RestaurantMenuViewModel}"
         mc:Ignorable="d"
         Title="RestaurantMenu" Height="450" Width="800">
     <Grid>
-        
+        <ListView ItemsSource="{Binding DishesCollection}">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Nazwa dania"
+                                    DisplayMemberBinding="{Binding Name}"
+                                    />
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </Window>
