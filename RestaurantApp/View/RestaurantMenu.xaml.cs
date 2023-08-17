@@ -28,11 +28,6 @@ namespace RestaurantApp.View
             InitializeComponent();
 
             DataContext = Ioc.Default.GetRequiredService<RestaurantMenuViewModel>();
-
-            WeakReferenceMessenger.Default.Register<RegisterWindowCloseMessage>(this, (r, m) =>
-            {
-                Close();
-            });
         }
     }
 }

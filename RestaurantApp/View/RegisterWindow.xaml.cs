@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using RestaurantApp.Messages;
 using RestaurantApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,11 @@ namespace RestaurantApp.View
             InitializeComponent();
 
             DataContext = Ioc.Default.GetRequiredService<RegisterWindowViewModel>();
+
+            WeakReferenceMessenger.Default.Register<RegisterWindowCloseMessage>(this, (r, m) =>
+            {
+                Close();
+            });
         }
     }
 }

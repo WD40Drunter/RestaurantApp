@@ -19,7 +19,7 @@
                        />
                 <TextBox Text="{Binding InputLogin}"
                          Width="100"
-                         MaxLength="50"
+                         MaxLength="10"
                          />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
