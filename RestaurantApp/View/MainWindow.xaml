@@ -39,8 +39,9 @@
             </ListView.View>
         </ListView>
         <StackPanel Orientation="Vertical"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Bottom">
+                    Margin="0 30 10 0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top">
             <StackPanel Margin="5"
                 Orientation="Horizontal">
                 <Label Content="Login:"
@@ -64,7 +65,7 @@
             </StackPanel>
             <StackPanel Margin="5"
                         Orientation="Horizontal"
-                        HorizontalAlignment="Left">
+                        HorizontalAlignment="Right">
                 <Button Content="Login"
                     Click="LoginButton_Click"
                     Width="50"
@@ -76,7 +77,7 @@
                         Command="{Binding LogoutCommand}"
                         Width="50"
                         Height="30"
-                        Margin="-55 0 0 0"
+                        Margin="0 -150 -55 0"
                         Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedInButtonVisibility}}"
                         />
                 <Button Content="Register"

@@ -34,6 +34,9 @@ namespace RestaurantApp.ViewModel
             OpenRegisterWindowCommand = new RelayCommand(OpenRegisterWindow);
             LogoutCommand = new RelayCommand(Logout);
 
+            RestaurantAddittonWindow window = new ();
+            window.Show();
+
             WeakReferenceMessenger.Default.Register<PasswordMessage>(this, (r, m) =>
             {
                 InputPassword = m.Value;
