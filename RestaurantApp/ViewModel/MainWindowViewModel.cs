@@ -32,6 +32,7 @@ namespace RestaurantApp.ViewModel
 
             OpenMenuWindowCommand = new RelayCommand<object?>(OpenMenuWindow);
             OpenRegisterWindowCommand = new RelayCommand(OpenRegisterWindow);
+            LogoutCommand = new RelayCommand(Logout);
 
             WeakReferenceMessenger.Default.Register<PasswordMessage>(this, (r, m) =>
             {
@@ -44,6 +45,7 @@ namespace RestaurantApp.ViewModel
 
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
         public IRelayCommand OpenRegisterWindowCommand { get; }
+        public IRelayCommand LogoutCommand { get; }
 
         [ObservableProperty]
         private ObservableCollection<Restaurant>? _restaurantsList;
@@ -103,6 +105,12 @@ namespace RestaurantApp.ViewModel
                 return;
             }
             LoggedInUser = user;
+        }
+
+        public void Logout()
+        {
+            InputLogin = null;
+            LoggedInUser = null;
         }
 
         partial void OnSearchRestaurantValueChanged(string? value)

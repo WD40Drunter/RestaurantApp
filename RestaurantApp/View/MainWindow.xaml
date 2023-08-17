@@ -3,9 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters="clr-namespace:RestaurantApp.Converters"
         xmlns:local="clr-namespace:RestaurantApp" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <converters:UserLoggedInButtonVisibility x:Key="UserLoggedInButtonVisibility"/>
+        <converters:UserLoggedOutButtonVisibility x:Key="UserLoggedOutButtonVisibility"/>
+    </Window.Resources>
     <Grid>
         <ListView x:Name="MyList"
                   ItemsSource="{Binding RestaurantsCollection}">
@@ -39,34 +44,49 @@
             <StackPanel Margin="5"
                 Orientation="Horizontal">
                 <Label Content="Login:"
+                       Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                    />
                 <TextBox Text="{Binding InputLogin}"
                      Width="100"
+                         Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                      />
             </StackPanel>
             <StackPanel Margin="5" 
                         Orientation="Horizontal">
                 <Label Content="Hasło:"
+                       Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                    />
                 <PasswordBox x:Name="PasswordInput"
                              PasswordChar="*"
                              Width="100"
+                             Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                              />
             </StackPanel>
-            <Button Content="Login"
+            <StackPanel Margin="5"
+                        Orientation="Horizontal"
+                        HorizontalAlignment="Left">
+                <Button Content="Login"
                     Click="LoginButton_Click"
                     Width="50"
                     Height="30"
                     Margin="5"
-                    HorizontalAlignment="Left"
+                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                     />
-            <Button Content="Register"
+                <Button Content="Logout"
+                        Command="{Binding LogoutCommand}"
+                        Width="50"
+                        Height="30"
+                        Margin="-55 0 0 0"
+                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedInButtonVisibility}}"
+                        />
+                <Button Content="Register"
                     Command="{Binding OpenRegisterWindowCommand}"
                     Width="50"
                     Height="30"
                     Margin="5"
-                    HorizontalAlignment="Left"
+                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                     />
+            </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
