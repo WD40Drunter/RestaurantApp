@@ -10,6 +10,7 @@ namespace RestaurantApp.Services
     public interface IUserService
     {
         public User? GetUser(string login);
+        public void AddUser(User user);
     }
     public class UserService : IUserService
     {
@@ -22,6 +23,12 @@ namespace RestaurantApp.Services
         public User? GetUser(string login)
         {
             return _context.Users.FirstOrDefault(x => x.Login == login);
+        }
+
+        public void AddUser(User user)
+        {
+            _context.Users.Add(user);
+            _context.SaveChanges();
         }
     }
 }

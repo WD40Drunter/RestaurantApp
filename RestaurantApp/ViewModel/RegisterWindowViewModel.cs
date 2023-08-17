@@ -1,11 +1,15 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using RestaurantApp.Messages;
+using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
@@ -32,15 +36,81 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private string _privilageValue = "Standard";
 
+        public bool ValidateLogin()
+        {
+            if (string.IsNullOrEmpty(InputLogin))
+            {
+                MessageBox.Show("Login nie może być pusty");
+                return false;
+            }
+            if (InputLogin.Contains('@')
+                || InputLogin.Contains('.')
+                || InputLogin.Contains('?')
+                || InputLogin.Contains(',')
+                || InputLogin.Contains('!')
+                || InputLogin.Contains('#')
+                || InputLogin.Contains('$')
+                || InputLogin.Contains('%')
+                || InputLogin.Contains('^')
+                || InputLogin.Contains('&')
+                || InputLogin.Contains('*')
+                || InputLogin.Contains('(')
+                || InputLogin.Contains(')')
+                || InputLogin.Contains('[')
+                || InputLogin.Contains(']')
+                || InputLogin.Contains('{')
+                || InputLogin.Contains('}')
+                || InputLogin.Contains('\\')
+                || InputLogin.Contains('|')
+                || InputLogin.Contains('/')
+                || InputLogin.Contains('>')
+                || InputLogin.Contains('<')
+                || InputLogin.Contains(';')
+                || InputLogin.Contains(':')
+                || InputLogin.Contains('"')
+                || InputLogin.Contains('\'')
+                || InputLogin.Contains('=')
+                || InputLogin.Contains('+')
+                || InputLogin.Contains('-')
+                || InputLogin.Contains('`')
+                || InputLogin.Contains('~'))
+            {
+                MessageBox.Show("Login nie może zawierać znaków specjalnych innych niż \"_\"");
+                return false;
+            }
+            return true;
+        }
+
+        public bool ValidatePassword()
+        {
+            if (string.IsNullOrEmpty(InputPassword))
+            {
+                MessageBox.Show("Hasło nie może być puste");
+                return false;
+            }
+            return true;
+        }
 
         public void AddUser()
         {
+            if (!ValidateLogin())
+            {
+                return;
+            }
+            if (!ValidatePassword())
+            {
+                return;
+            }
 
+            User user = new (InputLogin!, SecretHasher.Hash(InputPassword!), PrivilageValue);
+            _userService.AddUser(user);
+            
+            CloseWindow();
         }
 
-        public void CloseWindow()
+        public static void CloseWindow()
         {
-
+            WeakReferenceMessenger.Default.Send(new RegisterWindowCloseMessage());
         }
     }
 }
