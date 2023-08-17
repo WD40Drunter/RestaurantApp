@@ -9,6 +9,7 @@ namespace RestaurantApp.Services
 {
     public interface IUserService
     {
+        public bool Exists(string login);
         public User? GetUser(string login);
         public void AddUser(User user);
     }
@@ -19,6 +20,11 @@ namespace RestaurantApp.Services
             _context = context;
         }
         private readonly Context _context;
+
+        public bool Exists(string login)
+        {
+            return _context.Users.Any(x => x.Login == login);
+        }
 
         public User? GetUser(string login)
         {
