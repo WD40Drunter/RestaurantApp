@@ -57,7 +57,45 @@
                          Width="50"
                          />
             </StackPanel>
-            <
+            <StackPanel Orientation="Horizontal"
+                        Margin="5">
+                <Label Content="Ul.:"
+                       />
+                <TextBox Text="{Binding RestaurantAdressStreet}"
+                         Width="70"
+                         />
+                <Label Content="Nr. domu:"
+                       Margin="20 0 0 0"
+                       />
+                <TextBox Text="{Binding RestaurantAdressHouseNumber}"
+                         Width="30"
+                         />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="5"
+                        >
+                <Label Content="Kod pocztowy:"
+                       />
+                <xctk:MaskedTextBox Mask="00-000"
+                                    Text="{Binding RestaurantAdressPostalCode}"
+                                    Width="50"
+                                    TextAlignment="Center"
+                                    />
+            </StackPanel>
+            <StackPanel Margin="20 5 5 5"
+                        Orientation="Horizontal"
+                        >
+                <Button Content="Zapisz"
+                        Command="{Binding FinishActionCommand}"
+                        Height="30"
+                        Width="50"
+                        Margin="10 0 0 0"/>
+                <Button Content="Anuluj"
+                        Command="{Binding CloseWindowCommand}"
+                        Height="30"
+                        Width="50"
+                        Margin="20 0 0 0"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
