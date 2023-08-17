@@ -48,6 +48,7 @@ namespace RestaurantApp
                     .AddTransient<MainWindowViewModel>()
                     .AddTransient<RestaurantMenuViewModel>()
                     .AddTransient<RegisterWindowViewModel>()
+                    .AddTransient<RestaurantAdditionWindowViewModel>()
                     .BuildServiceProvider()
                 );
         }

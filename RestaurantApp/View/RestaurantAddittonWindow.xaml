@@ -1,0 +1,63 @@
+﻿<Window x:Class="RestaurantApp.View.RestaurantAddittonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:local="clr-namespace:RestaurantApp.View" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RestaurantAdditionWindowViewModel}"
+        mc:Ignorable="d"
+        Title="RestaurantAddittonWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal"
+                        Margin="5"
+                        >
+                <Label Content="Nazwa:"
+                       />
+                <TextBox Text="{Binding RestaurantName}"
+                         Width="100"
+                         />
+                <Label Margin="20 0 0 0"
+                       Content="Ocena:"
+                       />
+                <TextBox Text="{Binding RestaurantRating}"
+                         Width="50"
+                         />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="5"
+                        >
+                <Label Content="Godziny otwarcia:"
+                       />
+                <xctk:MaskedTextBox Mask="00:00"
+                                    Text="{Binding OpeningHour}"
+                                    Width="30"
+                                    />
+                <Label Content="-"
+                       />
+                <xctk:MaskedTextBox Mask="00:00"
+                                    Text="{Binding ClosingHour}"
+                                    Width="30"
+                                    />
+            </StackPanel>
+            <StackPanel Margin="5">
+                <Label Content="Adres:"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"
+                        Margin="5">
+                <Label Content="Kraj:"
+                       />
+                <TextBox Text="{Binding RestaurantAdressCountry}"
+                         Width="50"
+                         />
+                <Label Content="Miasto:"
+                       Margin="20 0 0 0"
+                       />
+                <TextBox Text="{Binding RestaurantAdressCity}"
+                         Width="50"
+                         />
+            </StackPanel>
+            <
+        </StackPanel>
+    </Grid>
+</Window>
