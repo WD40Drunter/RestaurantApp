@@ -60,6 +60,13 @@
                     Margin="5"
                     HorizontalAlignment="Left"
                     />
+            <Button Content="Register"
+                    Command="{Binding OpenRegisterWindowCommand}"
+                    Width="50"
+                    Height="30"
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    />
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"

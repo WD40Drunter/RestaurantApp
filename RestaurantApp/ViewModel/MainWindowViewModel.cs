@@ -31,6 +31,7 @@ namespace RestaurantApp.ViewModel
             RestaurantsCollection = CollectionCreator.GetCollection(RestaurantsList);
 
             OpenMenuWindowCommand = new RelayCommand<object?>(OpenMenuWindow);
+            OpenRegisterWindowCommand = new RelayCommand(OpenRegisterWindow);
 
             WeakReferenceMessenger.Default.Register<PasswordMessage>(this, (r, m) =>
             {
@@ -42,6 +43,7 @@ namespace RestaurantApp.ViewModel
         private readonly IUserService _userService;
 
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
+        public IRelayCommand OpenRegisterWindowCommand { get; }
 
         [ObservableProperty]
         private ObservableCollection<Restaurant>? _restaurantsList;
@@ -79,6 +81,12 @@ namespace RestaurantApp.ViewModel
             RestaurantMenu restaurantMenu = new();
             restaurantMenu.Show();
             WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurant?.RestaurantId));
+        }
+
+        public static void OpenRegisterWindow()
+        {
+            RegisterWindow registerWindow = new();
+            registerWindow.Show();
         }
 
         public void Login()
