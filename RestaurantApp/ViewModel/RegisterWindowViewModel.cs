@@ -43,6 +43,16 @@ namespace RestaurantApp.ViewModel
                 MessageBox.Show("Login nie może być pusty");
                 return false;
             }
+            if (_userService.Exists(InputLogin))
+            {
+                MessageBox.Show("Login zajęty");
+                return false;
+            }
+            if (InputLogin.Contains(' '))
+            {
+                MessageBox.Show("Login nie może zawierać spacji");
+                return false;
+            }
             if (InputLogin.Contains('@')
                 || InputLogin.Contains('.')
                 || InputLogin.Contains('?')
