@@ -24,7 +24,7 @@ namespace RestaurantApp.Services
             _context.Adresses.Add(adress);
             _context.SaveChanges();
 
-            return _context.Adresses.FirstOrDefault(adress).AdressId;
+            return adress.AdressId;
         }
     }
 }

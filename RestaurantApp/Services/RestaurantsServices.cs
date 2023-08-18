@@ -11,7 +11,7 @@ namespace RestaurantApp.Services
     public interface IRestaurantsService
     {
         IEnumerable<Restaurant> GetAll();
-        
+        Restaurant AddRestaurant(Restaurant restaurant);
     }
     public class RestaurantsServices : IRestaurantsService
     {
@@ -24,6 +24,13 @@ namespace RestaurantApp.Services
         public IEnumerable<Restaurant> GetAll()
         {
             return _context.Restaurants.Include(x => x.Adress);
+        }
+
+        public Restaurant AddRestaurant(Restaurant restaurant)
+        {
+            _context.Restaurants.Add(restaurant);
+            _context.SaveChanges();
+            return restaurant;
         }
     }
 }
