@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
@@ -76,36 +77,60 @@ namespace RestaurantApp.ViewModel
             RestaurantAdressPostalCode = restaurant.Adress!.PostalCode;
         }
 
+        public bool IsEverythingWellInputed()
+        {
+            if (!Validator.IsStringNotNull(RestaurantName)
+                || !Validator.IsStringNotNull(RestaurantRating)
+                || !Validator.IsStringNotNull(OpeningHour)
+                || !Validator.IsStringNotNull(ClosingHour)
+                || !Validator.IsStringNotNull(RestaurantAdressCountry)
+                || !Validator.IsStringNotNull(RestaurantAdressCity)
+                || !Validator.IsStringNotNull(RestaurantAdressStreet)
+                || !Validator.IsStringNotNull(RestaurantAdressHouseNumber)
+                || !Validator.IsStringNotNull(RestaurantAdressPostalCode))
+            {
+                return false;
+            }
+            if (!Validator.IsHourValid(OpeningHour!) || !Validator.IsHourValid(ClosingHour!))
+            {
+                return false;
+            }
+            if (!Validator.IsHouseNumberValid(RestaurantAdressHouseNumber!))
+            {
+                return false;
+            }
+            return true;
+        }
+
         public void FinishAction()
         {
-            // Validation
-
+            if (!IsEverythingWellInputed())
+            {
+                return;
+            }
+            Adress adress = new(RestaurantAdressCountry!, RestaurantAdressCity!, RestaurantAdressStreet!, RestaurantAdressHouseNumber!, RestaurantAdressPostalCode!);
             if (_oldEditRestaurant is null)
             {
-                AddRestaurant();
+                AddRestaurant(adress);
             }
             else
             {
-                EditRestaurant();
+                EditRestaurant(adress);
             }
             CloseWindow();
         }
 
-        public void AddRestaurant()
+        public void AddRestaurant(Adress adress)
         {
-            decimal restaurantRating = Convert.ToDecimal(RestaurantRating!);
-            Adress adress = new(RestaurantAdressCountry!, RestaurantAdressCity!, RestaurantAdressStreet!, RestaurantAdressHouseNumber!, RestaurantAdressPostalCode!);
             int adressId = _adressServices.AddAdress(adress);
-            Restaurant restaurant = new(RestaurantName!, restaurantRating, OpeningHour!, ClosingHour!, adressId);
+            Restaurant restaurant = new(RestaurantName!, Convert.ToDecimal(RestaurantRating!), OpeningHour!, ClosingHour!, adressId);
             WeakReferenceMessenger.Default.Send(new SendRestaurantAddValueMessage(restaurant));
         }
 
-        public void EditRestaurant()
+        public void EditRestaurant(Adress adress)
         {
-            decimal restaurantRating = Convert.ToDecimal(RestaurantRating!);
-            Adress adress = new(RestaurantAdressCountry!, RestaurantAdressCity!, RestaurantAdressStreet!, RestaurantAdressHouseNumber!, RestaurantAdressPostalCode!);
             _oldEditRestaurant!.Adress = _adressServices.EditAdress(_oldEditRestaurant!.Adress!, adress);
-            Restaurant restaurant = new(RestaurantName!, restaurantRating, OpeningHour!, ClosingHour!, _oldEditRestaurant.Adress.AdressId);
+            Restaurant restaurant = new(RestaurantName!, Convert.ToDecimal(RestaurantRating!), OpeningHour!, ClosingHour!, _oldEditRestaurant.Adress.AdressId);
             WeakReferenceMessenger.Default.Send(new SendRestaurantEditValueMessage(restaurant));
         }
 
