@@ -104,6 +104,11 @@ namespace RestaurantApp.ViewModel
 
         public void FinishAction()
         {
+            RestaurantRating = RestaurantRating!.Replace('_', '0');
+            OpeningHour = OpeningHour!.Replace('_', '0');
+            ClosingHour = ClosingHour!.Replace('_', '0');
+            RestaurantAdressPostalCode = RestaurantAdressPostalCode!.Replace('_', '0');
+
             if (!IsEverythingWellInputed())
             {
                 return;
