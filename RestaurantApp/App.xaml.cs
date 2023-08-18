@@ -45,6 +45,7 @@ namespace RestaurantApp
                     .AddScoped<IRestaurantsService, RestaurantsServices>()
                     .AddScoped<IDishService, DishService>()
                     .AddScoped<IUserService, UserService>()
+                    .AddScoped<IAdressServices, AdressServices>()
                     .AddTransient<MainWindowViewModel>()
                     .AddTransient<RestaurantMenuViewModel>()
                     .AddTransient<RegisterWindowViewModel>()
