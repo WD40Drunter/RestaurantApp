@@ -42,6 +42,11 @@ namespace RestaurantApp.ViewModel
                 InputPassword = m.Value;
                 Login();
             });
+
+            WeakReferenceMessenger.Default.Register<SendRestaurantValueMessage>(this, (r, m) =>
+            {
+                AddRestaurant(m.Value);
+            });
         }
         private readonly IRestaurantsService _restaurantsService;
         private readonly IUserService _userService;
@@ -114,6 +119,12 @@ namespace RestaurantApp.ViewModel
         {
             InputLogin = null;
             LoggedInUser = null;
+        }
+
+        public void AddRestaurant(Restaurant restaurant)
+        {
+            RestaurantsList!.Add(_restaurantsService.AddRestaurant(restaurant));
+            RefreshRestaurantsCollection();
         }
 
         partial void OnSearchRestaurantValueChanged(string? value)

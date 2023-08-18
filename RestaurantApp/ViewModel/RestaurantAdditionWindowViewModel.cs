@@ -1,5 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
+using RestaurantApp.Messages;
+using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
@@ -11,15 +14,15 @@ namespace RestaurantApp.ViewModel
 {
     internal partial class RestaurantAdditionWindowViewModel : ObservableRecipient
     {
-        public RestaurantAdditionWindowViewModel( IRestaurantsService restaurantsService)
+        public RestaurantAdditionWindowViewModel(IAdressServices adressServices)
         {
-            _restaurantsService = restaurantsService;
+            _adressServices = adressServices;
 
             FinishActionCommand = new RelayCommand(FinishAction);
             CloseWindowCommand = new RelayCommand(CloseWindow);
 
         }
-        private readonly IRestaurantsService _restaurantsService;
+        private readonly IAdressServices _adressServices;
 
         public IRelayCommand FinishActionCommand { get; }
         public IRelayCommand CloseWindowCommand { get; }
@@ -53,12 +56,18 @@ namespace RestaurantApp.ViewModel
 
         public void FinishAction()
         {
-
+            // Validation
+            decimal restaurantRating = Convert.ToDecimal(RestaurantRating!);
+            Adress adress = new(RestaurantAdressCountry!, RestaurantAdressCity!, RestaurantAdressStreet!, RestaurantAdressHouseNumber!, RestaurantAdressPostalCode!);
+            int adressId = _adressServices.AddAdress(adress);
+            Restaurant restaurant = new (RestaurantName!, restaurantRating, OpeningHour!, ClosingHour!, adressId);
+            WeakReferenceMessenger.Default.Send(new SendRestaurantValueMessage(restaurant));
+            CloseWindow();
         }
 
         public void CloseWindow()
         {
-
+            WeakReferenceMessenger.Default.Send(new RestaurantAdditionCloseWindowMessage());
         }
     }
 }
