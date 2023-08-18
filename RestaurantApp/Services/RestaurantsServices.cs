@@ -12,6 +12,7 @@ namespace RestaurantApp.Services
     {
         IEnumerable<Restaurant> GetAll();
         Restaurant AddRestaurant(Restaurant restaurant);
+        Restaurant EditRestaurant(Restaurant oldValue, Restaurant newValue);
     }
     public class RestaurantsServices : IRestaurantsService
     {
@@ -31,6 +32,18 @@ namespace RestaurantApp.Services
             _context.Restaurants.Add(restaurant);
             _context.SaveChanges();
             return restaurant;
+        }
+
+        public Restaurant EditRestaurant(Restaurant oldValue, Restaurant newValue)
+        {
+            oldValue.Name = newValue.Name;
+            oldValue.Rating = newValue.Rating;
+            oldValue.OpeningHour = newValue.OpeningHour;
+            oldValue.ClosingHour = newValue.ClosingHour;
+            oldValue.Adress = newValue.Adress;
+
+            _context.SaveChanges();
+            return oldValue;
         }
     }
 }
