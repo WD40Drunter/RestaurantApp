@@ -33,7 +33,7 @@ namespace RestaurantApp.Model
         {
             foreach (var item in value)
             {
-                if (!char.IsDigit(item) || item != '/')
+                if (!char.IsDigit(item) && item != '/')
                 {
                     MessageBox.Show("Numer domu może zawierać tylko cyfry bądź znak /");
                     return false;

@@ -34,8 +34,8 @@ namespace RestaurantApp.ViewModel
             OpenRegisterWindowCommand = new RelayCommand(OpenRegisterWindow);
             LogoutCommand = new RelayCommand(Logout);
 
-            RestaurantAddittonWindow window = new ();
-            window.Show();
+            AddRestaurantCommand = new RelayCommand(OpenAdditionToAdd);
+            EditRestaurantCommand = new RelayCommand(OpenAddtionToEdit);
 
             WeakReferenceMessenger.Default.Register<PasswordMessage>(this, (r, m) =>
             {
@@ -59,6 +59,9 @@ namespace RestaurantApp.ViewModel
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
         public IRelayCommand OpenRegisterWindowCommand { get; }
         public IRelayCommand LogoutCommand { get; }
+
+        public IRelayCommand AddRestaurantCommand { get; }
+        public IRelayCommand EditRestaurantCommand { get; }
 
         [ObservableProperty]
         private Restaurant? _selectedRestaurant;
@@ -147,7 +150,9 @@ namespace RestaurantApp.ViewModel
 
         public void EditRestaurant(Restaurant restaurant)
         {
-            throw new NotImplementedException();
+            SelectedRestaurant = _restaurantsService.EditRestaurant(SelectedRestaurant!, restaurant);
+
+            RefreshRestaurantsCollection();
         }
 
         public void AddRestaurant(Restaurant restaurant)

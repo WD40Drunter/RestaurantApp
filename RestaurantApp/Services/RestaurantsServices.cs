@@ -40,7 +40,6 @@ namespace RestaurantApp.Services
             oldValue.Rating = newValue.Rating;
             oldValue.OpeningHour = newValue.OpeningHour;
             oldValue.ClosingHour = newValue.ClosingHour;
-            oldValue.Adress = newValue.Adress;
 
             _context.SaveChanges();
             return oldValue;
