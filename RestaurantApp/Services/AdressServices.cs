@@ -10,6 +10,7 @@ namespace RestaurantApp.Services
     public interface IAdressServices
     {
         int AddAdress(Adress adress);
+        Adress EditAdress(Adress oldValue, Adress newValue);
     }
     public class AdressServices : IAdressServices
     {
@@ -26,5 +27,18 @@ namespace RestaurantApp.Services
 
             return adress.AdressId;
         }
+
+        public Adress EditAdress(Adress oldValue, Adress newValue)
+        {
+            oldValue.Country = newValue.Country;
+            oldValue.City = newValue.City;
+            oldValue.Street = newValue.Street;
+            oldValue.HouseNumber = newValue.HouseNumber;
+            oldValue.PostalCode = newValue.PostalCode;
+
+            _context.SaveChanges();
+            return oldValue;
+        }
+
     }
 }

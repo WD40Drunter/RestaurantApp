@@ -18,6 +18,8 @@ namespace RestaurantApp.ViewModel
         {
             _adressServices = adressServices;
 
+            _editWasCalled = false;
+
             FinishActionCommand = new RelayCommand(FinishAction);
             CloseWindowCommand = new RelayCommand(CloseWindow);
 
@@ -32,7 +34,7 @@ namespace RestaurantApp.ViewModel
         public IRelayCommand FinishActionCommand { get; }
         public IRelayCommand CloseWindowCommand { get; }
 
-        private bool _editWasCalled = false;
+        private bool _editWasCalled;
 
         [ObservableProperty]
         private string? _restaurantName;
