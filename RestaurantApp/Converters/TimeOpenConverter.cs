@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Data;
 
 namespace RestaurantApp.Converters
@@ -13,7 +14,9 @@ namespace RestaurantApp.Converters
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
             string result;
-            if (values[0] == values[1])
+            //MessageBox.Show(values[0]);
+            //MessageBox.Show(values[1]);
+            if (values[0].ToString() == values[1].ToString())
             {
                 result = "cała doba";
             }
