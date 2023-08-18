@@ -64,6 +64,7 @@
                    />
                 <TextBox Text="{Binding InputLogin}"
                      Width="100"
+                         MaxLength="100"
                          Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                      />
             </StackPanel>
@@ -75,6 +76,7 @@
                 <PasswordBox x:Name="PasswordInput"
                              PasswordChar="*"
                              Width="100"
+                             MaxLength="500"
                              Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                              />
             </StackPanel>
@@ -106,7 +108,8 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom">
+                    VerticalAlignment="Bottom"
+                    Margin="5">
             <Label Content="Wyszukaj:"
                    />
             <TextBox Text="{Binding SearchRestaurantValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}"
