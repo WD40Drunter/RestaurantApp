@@ -10,6 +10,7 @@
     <Window.Resources>
         <converters:UserLoggedInButtonVisibility x:Key="UserLoggedInButtonVisibility"/>
         <converters:UserLoggedOutButtonVisibility x:Key="UserLoggedOutButtonVisibility"/>
+        <converters:TimeOpenConverter x:Key="TimeOpenConverter"/>
     </Window.Resources>
     <Grid>
         <ListView x:Name="MyList"
@@ -23,6 +24,21 @@
                     <GridViewColumn Header="Ocena"
                                     DisplayMemberBinding="{Binding Rating}"
                                     />
+                    <GridViewColumn Header="Godziny otwarcia"
+                                    >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding Converter="{StaticResource TimeOpenConverter}">
+                                            <Binding Path="OpeningHour"/>
+                                            <Binding Path="ClosingHour"/>
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Adres"
                                     DisplayMemberBinding="{Binding Adress.FullAdress}"
                                     />
