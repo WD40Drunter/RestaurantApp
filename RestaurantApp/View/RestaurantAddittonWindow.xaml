@@ -16,6 +16,7 @@
                        />
                 <TextBox Text="{Binding RestaurantName}"
                          Width="100"
+                         MaxLength="50"
                          />
                 <Label Margin="20 0 0 0"
                        Content="Ocena:"
@@ -51,12 +52,14 @@
                        />
                 <TextBox Text="{Binding RestaurantAdressCountry}"
                          Width="50"
+                         MaxLength="25"
                          />
                 <Label Content="Miasto:"
                        Margin="20 0 0 0"
                        />
                 <TextBox Text="{Binding RestaurantAdressCity}"
                          Width="50"
+                         MaxLength="30"
                          />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
@@ -65,12 +68,14 @@
                        />
                 <TextBox Text="{Binding RestaurantAdressStreet}"
                          Width="70"
+                         MaxLength="20"
                          />
                 <Label Content="Nr. domu:"
                        Margin="20 0 0 0"
                        />
                 <TextBox Text="{Binding RestaurantAdressHouseNumber}"
                          Width="30"
+                         MaxLength="10"
                          />
             </StackPanel>
             <StackPanel Orientation="Horizontal"
