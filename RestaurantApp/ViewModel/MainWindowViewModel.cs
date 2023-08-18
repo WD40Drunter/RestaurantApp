@@ -43,9 +43,14 @@ namespace RestaurantApp.ViewModel
                 Login();
             });
 
-            WeakReferenceMessenger.Default.Register<SendRestaurantValueMessage>(this, (r, m) =>
+            WeakReferenceMessenger.Default.Register<SendRestaurantAddValueMessage>(this, (r, m) =>
             {
                 AddRestaurant(m.Value);
+            });
+
+            WeakReferenceMessenger.Default.Register<SendRestaurantEditValueMessage>(this, (r, m) =>
+            {
+                EditRestaurant(m.Value);
             });
         }
         private readonly IRestaurantsService _restaurantsService;
@@ -54,6 +59,9 @@ namespace RestaurantApp.ViewModel
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
         public IRelayCommand OpenRegisterWindowCommand { get; }
         public IRelayCommand LogoutCommand { get; }
+
+        [ObservableProperty]
+        private Restaurant? _selectedRestaurant;
 
         [ObservableProperty]
         private ObservableCollection<Restaurant>? _restaurantsList;
@@ -99,6 +107,22 @@ namespace RestaurantApp.ViewModel
             registerWindow.Show();
         }
 
+        public static void OpenAdditionToAdd()
+        {
+            RestaurantAddittonWindow restaurantAddittonWindow = new();
+            restaurantAddittonWindow.Show();
+        }
+
+        public void OpenAddtionToEdit()
+        {
+            if(SelectedRestaurant is null)
+            {
+                return;
+            }
+            OpenAdditionToAdd();
+            WeakReferenceMessenger.Default.Send(new SendRestaurantToEditMessage(SelectedRestaurant));
+        }
+
         public void Login()
         {
             User? user = _userService.GetUser(InputLogin!);
@@ -119,6 +143,11 @@ namespace RestaurantApp.ViewModel
         {
             InputLogin = null;
             LoggedInUser = null;
+        }
+
+        public void EditRestaurant(Restaurant restaurant)
+        {
+            throw new NotImplementedException();
         }
 
         public void AddRestaurant(Restaurant restaurant)

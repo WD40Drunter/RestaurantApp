@@ -21,11 +21,18 @@ namespace RestaurantApp.ViewModel
             FinishActionCommand = new RelayCommand(FinishAction);
             CloseWindowCommand = new RelayCommand(CloseWindow);
 
+            WeakReferenceMessenger.Default.Register<SendRestaurantToEditMessage>(this, (r, m) =>
+            {
+                _editWasCalled = true;
+                AssignRestaurantValuesForEdit(m.Value);
+            });
         }
         private readonly IAdressServices _adressServices;
 
         public IRelayCommand FinishActionCommand { get; }
         public IRelayCommand CloseWindowCommand { get; }
+
+        private bool _editWasCalled = false;
 
         [ObservableProperty]
         private string? _restaurantName;
@@ -54,14 +61,27 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private string? _restaurantAdressPostalCode;
 
+        public void AssignRestaurantValuesForEdit(Restaurant restaurant)
+        {
+            RestaurantName = restaurant.Name;
+            RestaurantRating = restaurant.Rating.ToString();
+            OpeningHour = restaurant.OpeningHour;
+            ClosingHour = restaurant.ClosingHour;
+            RestaurantAdressCountry = restaurant.Adress!.Country;
+            RestaurantAdressCity = restaurant.Adress!.City;
+            RestaurantAdressStreet = restaurant.Adress!.Street;
+            RestaurantAdressHouseNumber = restaurant.Adress!.HouseNumber;
+            RestaurantAdressPostalCode = restaurant.Adress!.PostalCode;
+        }
+
         public void FinishAction()
         {
             // Validation
             decimal restaurantRating = Convert.ToDecimal(RestaurantRating!);
             Adress adress = new(RestaurantAdressCountry!, RestaurantAdressCity!, RestaurantAdressStreet!, RestaurantAdressHouseNumber!, RestaurantAdressPostalCode!);
             int adressId = _adressServices.AddAdress(adress);
-            Restaurant restaurant = new (RestaurantName!, restaurantRating, OpeningHour!, ClosingHour!, adressId);
-            WeakReferenceMessenger.Default.Send(new SendRestaurantValueMessage(restaurant));
+            Restaurant restaurant = new(RestaurantName!, restaurantRating, OpeningHour!, ClosingHour!, adressId);
+            WeakReferenceMessenger.Default.Send(new SendRestaurantAddValueMessage(restaurant));
             CloseWindow();
         }
 

@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace RestaurantApp.Messages
 {
-    public class SendRestaurantValueMessage : ValueChangedMessage<Restaurant>
+    public class SendRestaurantToEditMessage :ValueChangedMessage<Restaurant>
     {
-        public SendRestaurantValueMessage(Restaurant value) : base(value)
+        public SendRestaurantToEditMessage(Restaurant value) : base(value)
         {
             
         }
