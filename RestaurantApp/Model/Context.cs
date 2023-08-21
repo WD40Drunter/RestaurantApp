@@ -12,5 +12,6 @@ namespace RestaurantApp.Model
         public DbSet<Dish> Dishes { get; set; }
         public DbSet<Adress> Adresses { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Status> Statuses { get; set; }
     }
 }

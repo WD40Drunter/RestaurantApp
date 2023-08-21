@@ -16,14 +16,16 @@ namespace RestaurantApp.ViewModel
 {
     public partial class RestaurantMenuViewModel : ObservableObject
     {
-        public RestaurantMenuViewModel(IDishService dishService)
+        public RestaurantMenuViewModel(IDishService dishService, IStatusServices statusServices)
         {
             _dishService = dishService;
+            _statusServices = statusServices;
             CollectionCreator = new ();
 
             AddDishCommand = new RelayCommand(AddDish);
 
-            
+            StatusList = new(_statusServices.GetAll());
+            StatusCollection = CollectionCreator.GetCollection(StatusList);
 
             WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
             {
@@ -35,6 +37,7 @@ namespace RestaurantApp.ViewModel
 
         }
         private readonly IDishService _dishService;
+        private readonly IStatusServices _statusServices;
         CollectionCreator CollectionCreator { get; set; }
 
         public int RestaurantId { get; set; }
@@ -55,7 +58,13 @@ namespace RestaurantApp.ViewModel
 
         [ObservableProperty]
         private string? _dishStatus;
-        
+
+        [ObservableProperty]
+        private ObservableCollection<Status>? _statusList;
+
+        [ObservableProperty]
+        private ICollectionView? _statusCollection;
+
         public void RefreshDishesCollection()
         {
             DishesCollection?.Refresh();
@@ -72,7 +81,7 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            Dish dish = new(DishName!, 0, RestaurantId);
+            Dish dish = new(DishName!, 1, RestaurantId);
 
             DishesList?.Add(_dishService.AddDish(dish));
 

@@ -52,5 +52,12 @@ namespace RestaurantApp.Model
             }
             return dish.Name.Contains(SearchDishValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
         }
+
+        public static ICollectionView GetCollection(ObservableCollection<Status>? collection)
+        {
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(collection);
+            collectionView.SortDescriptions.Add(new SortDescription(nameof(Status.StatusId), ListSortDirection.Ascending));
+            return collectionView;
+        }
     }
 }
