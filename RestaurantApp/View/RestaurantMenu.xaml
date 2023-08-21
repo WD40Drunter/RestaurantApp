@@ -17,14 +17,8 @@
                                     >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox x:Name="MyComboBox"
-                                          SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=Status}"
-                                          Loaded="ComboBox_Loaded"
-                                          >
-                                    <ComboBoxItem Content="avaiable"/>
-                                    <ComboBoxItem Content="hidden"/>
-                                    <ComboBoxItem Content="seasonal"/>
-                                </ComboBox>
+                                <ComboBox 
+                                          />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>

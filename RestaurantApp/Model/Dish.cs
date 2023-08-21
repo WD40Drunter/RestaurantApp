@@ -13,14 +13,15 @@ namespace RestaurantApp.Model
         [Key]
         public long DishId { get; set; }
 
-        public Dish(string name, string status, int restaurantId)
+        public Dish(string name, int statusId, int restaurantId)
         {
             Name = name;
-            Status = status;
+            StatusId = statusId;
             RestaurantId = restaurantId;
         }
         public string Name { get; set; }
-        public string Status { get; set; }
+        public int StatusId { get; set; }
+        public virtual Status? Status { get; set; }
         public int RestaurantId { get; set; }
         public virtual Restaurant? Restaurant { get; set; }
     }

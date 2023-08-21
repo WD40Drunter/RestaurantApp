@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using RestaurantApp.Messages;
+using RestaurantApp.Model;
 using RestaurantApp.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -28,11 +29,8 @@ namespace RestaurantApp.View
             InitializeComponent();
 
             DataContext = Ioc.Default.GetRequiredService<RestaurantMenuViewModel>();
-        }
-
-        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
-        {
 
         }
+
     }
 }
