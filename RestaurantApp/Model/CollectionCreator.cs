@@ -50,7 +50,7 @@ namespace RestaurantApp.Model
             {
                 return false;
             }
-            return dish.Name.Contains(SearchRestaurantValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
+            return dish.Name.Contains(SearchDishValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

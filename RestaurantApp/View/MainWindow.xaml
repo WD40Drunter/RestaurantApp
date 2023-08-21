@@ -15,7 +15,9 @@
     <Grid>
         <ListView x:Name="MyList"
                   ItemsSource="{Binding RestaurantsCollection}"
-                  SelectedItem="{Binding SelectedRestaurant}">
+                  SelectedItem="{Binding SelectedRestaurant}"
+                  Width="600"
+                  HorizontalAlignment="Left">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Nazwa restauracji"
