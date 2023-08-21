@@ -13,8 +13,49 @@
                     <GridViewColumn Header="Nazwa dania"
                                     DisplayMemberBinding="{Binding Name}"
                                     />
+                    <GridViewColumn Header="Status"
+                                    >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox x:Name="MyComboBox"
+                                          SelectedItem="{Binding RelativeSource={RelativeSource AncestorType=ListView}, Path=Status}"
+                                          Loaded="ComboBox_Loaded"
+                                          >
+                                    <ComboBoxItem Content="avaiable"/>
+                                    <ComboBoxItem Content="hidden"/>
+                                    <ComboBoxItem Content="seasonal"/>
+                                </ComboBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+        <StackPanel Orientation="Horizontal"
+                    VerticalAlignment="Bottom"
+                    HorizontalAlignment="Left"
+                    Margin="5">
+            <Label Content="Nazwa dania:"
+                   />
+            <TextBox Text="{Binding DishName}"
+                     Width="100"
+                     />
+            <Button Width="50"
+                    Height="30"
+                    Content="Dodaj"
+                    Margin="10 0 0 0"
+                    Command="{Binding AddDishCommand}"
+                    />
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Margin="5">
+            <Label Content="Wyszukaj:"
+                   />
+            <TextBox Text="{Binding SearchDishValue, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Delay=500}"
+                     Width="100"
+                     />
+        </StackPanel>
     </Grid>
 </Window>

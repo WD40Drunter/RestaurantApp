@@ -29,5 +29,10 @@ namespace RestaurantApp.View
 
             DataContext = Ioc.Default.GetRequiredService<RestaurantMenuViewModel>();
         }
+
+        private void ComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
