@@ -17,7 +17,8 @@
                                     >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox 
+                                <ComboBox ItemsSource="{Binding StatusCollection}"
+                                          SelectedValue="{Binding StatusId}"
                                           />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
