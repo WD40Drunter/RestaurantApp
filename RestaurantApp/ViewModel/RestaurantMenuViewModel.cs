@@ -23,12 +23,15 @@ namespace RestaurantApp.ViewModel
 
             AddDishCommand = new RelayCommand(AddDish);
 
+            
+
             WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
             {
                 RestaurantId = (int)(m.Value ?? 0);
                 DishesList = new(_dishService.GetSelected(m.Value));
                 DishesCollection = CollectionCreator.GetCollection(DishesList);
             });
+
 
         }
         private readonly IDishService _dishService;
@@ -69,7 +72,7 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            Dish dish = new(DishName!, "available", RestaurantId);
+            Dish dish = new(DishName!, 0, RestaurantId);
 
             DishesList?.Add(_dishService.AddDish(dish));
 
