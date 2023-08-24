@@ -24,13 +24,13 @@ namespace RestaurantApp.ViewModel
 
             WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
             {
-                RestaurantId = (int)(m.Value ?? 0);
+                RestaurantId = m.Value ?? 0;
             });
 
             WeakReferenceMessenger.Default.Register<SendUserMessage>(this, (r, m) =>
             {
                 LoggedInUser = m.Value;
-                if (LoggedInUser.Access == "Admin")
+                if (UserValidator.IsAdmin(LoggedInUser))
                 {
                     DishesList = new(_dishService.GetSelected(RestaurantId));
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
@@ -45,7 +45,9 @@ namespace RestaurantApp.ViewModel
 
             WeakReferenceMessenger.Default.Register<ValuesOfStatusToChangeItInDatabaseMessage>(this, (r, m) =>
             {
-                _dishService.ChangeStatus(int.Parse(m.Value[0]), int.Parse(m.Value[1]));
+                int dishId = int.Parse(m.Value[0]);
+                int statusId = int.Parse(m.Value[1]);
+                _dishService.ChangeStatus(dishId, statusId);
             });
         }
         private readonly IDishService _dishService;
@@ -119,7 +121,7 @@ namespace RestaurantApp.ViewModel
 
         partial void OnStatusColumnWidthChanged(string value)
         {
-            if (LoggedInUser!.Access == "Standard")
+            if (!UserValidator.IsAdmin(LoggedInUser))
             {
                 StatusColumnWidth = "0";
                 return;
