@@ -42,6 +42,11 @@ namespace RestaurantApp.ViewModel
                     StatusColumnWidth = "100";
                 }
             });
+
+            WeakReferenceMessenger.Default.Register<ValuesOfStatusToChangeItInDatabaseMessage>(this, (r, m) =>
+            {
+                _dishService.ChangeStatus(int.Parse(m.Value[0]), int.Parse(m.Value[1]));
+            });
         }
         private readonly IDishService _dishService;
         private readonly IStatusServices _statusServices;

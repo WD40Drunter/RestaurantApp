@@ -13,6 +13,7 @@ namespace RestaurantApp.Services
         IEnumerable<Dish> GetAll();
         IEnumerable<Dish> GetSelected(int? restaurantId);
         Dish AddDish (Dish dish);
+        void ChangeStatus(int dishId, int statusId);
     }
     public class DishService : IDishService
     {
@@ -37,6 +38,12 @@ namespace RestaurantApp.Services
             _context.Add(dish);
             _context.SaveChanges();
             return dish;
+        }
+
+        public void ChangeStatus (int dishId, int statusId)
+        {
+            _context.Dishes.FirstOrDefault(x => x.DishId == dishId)!.StatusId = statusId + 1;
+            _context.SaveChanges();
         }
     }
 }
