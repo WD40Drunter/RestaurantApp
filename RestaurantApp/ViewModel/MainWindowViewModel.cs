@@ -125,6 +125,7 @@ namespace RestaurantApp.ViewModel
             RestaurantMenu restaurantMenu = new();
             restaurantMenu.Show();
             WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurant?.RestaurantId));
+            WeakReferenceMessenger.Default.Send(new SendUserMessage(LoggedInUser!));
         }
 
         public static void OpenRegisterWindow()
