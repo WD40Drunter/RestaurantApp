@@ -1,16 +1,11 @@
 ﻿using RestaurantApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
 {
     public interface IAdressServices
     {
         int AddAdress(Adress adress);
-        Adress EditAdress(Adress oldValue, Adress newValue);
+        void EditAdress(Adress oldValue, Adress newValue);
     }
     public class AdressServices : IAdressServices
     {
@@ -28,7 +23,7 @@ namespace RestaurantApp.Services
             return adress.AdressId;
         }
 
-        public Adress EditAdress(Adress oldValue, Adress newValue)
+        public void EditAdress(Adress oldValue, Adress newValue)
         {
             oldValue.Country = newValue.Country;
             oldValue.City = newValue.City;
@@ -37,7 +32,6 @@ namespace RestaurantApp.Services
             oldValue.PostalCode = newValue.PostalCode;
 
             _context.SaveChanges();
-            return oldValue;
         }
 
     }

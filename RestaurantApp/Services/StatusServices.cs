@@ -1,10 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
-using RestaurantApp.Model;
-using System;
+﻿using RestaurantApp.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
 {

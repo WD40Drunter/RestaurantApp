@@ -1,11 +1,6 @@
-﻿using RestaurantApp.Services;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace RestaurantApp.Model
@@ -15,7 +10,7 @@ namespace RestaurantApp.Model
         public CollectionCreator()
         {
         }
-        
+
         public string? SearchRestaurantValue { get; set; }
         public string? SearchDishValue { get; set; }
 

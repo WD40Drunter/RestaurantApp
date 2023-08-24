@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace RestaurantApp.Model
 {
@@ -11,7 +6,7 @@ namespace RestaurantApp.Model
     {
         [Key]
         public int StatusId { get; set; }
-        public Status(string name) 
+        public Status(string name)
         {
             Name = name;
         }

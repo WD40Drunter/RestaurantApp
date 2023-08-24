@@ -42,7 +42,7 @@
                     Margin="5">
             <Label Content="Nazwa dania:"
                    />
-            <TextBox Text="{Binding DishName}"
+            <TextBox Text="{Binding Name}"
                      Width="100"
                      />
             <Button Width="50"

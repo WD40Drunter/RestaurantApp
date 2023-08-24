@@ -4,11 +4,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace RestaurantApp.ViewModel
@@ -112,9 +107,9 @@ namespace RestaurantApp.ViewModel
                 return;
             }
 
-            User user = new (InputLogin!, SecretHasher.Hash(InputPassword!), PrivilageValue);
+            User user = new(InputLogin!, SecretHasher.Hash(InputPassword!), PrivilageValue);
             _userService.AddUser(user);
-            
+
             CloseWindow();
         }
 
