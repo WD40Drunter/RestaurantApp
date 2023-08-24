@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantApp.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
 {
@@ -13,7 +10,7 @@ namespace RestaurantApp.Services
         IEnumerable<Dish> GetAll();
         IEnumerable<Dish> GetSelected(int? restaurantId);
         IEnumerable<Dish> GetSelectedForStandard(int? restaurantId);
-        Dish AddDish (Dish dish);
+        Dish AddDish(Dish dish);
         void ChangeStatus(int dishId, int statusId);
     }
     public class DishService : IDishService
@@ -26,27 +23,27 @@ namespace RestaurantApp.Services
 
         public IEnumerable<Dish> GetAll()
         {
-                return _context.Dishes.Include(x => x.Restaurant);
+            return _context.Dishes.Include(x => x.Restaurant);
         }
 
         public IEnumerable<Dish> GetSelected(int? restaurantId)
         {
-                return _context.Dishes.Where(x => x.RestaurantId == restaurantId).Include(x => x.Restaurant);
+            return _context.Dishes.Where(x => x.RestaurantId == restaurantId).Include(x => x.Restaurant);
         }
 
         public IEnumerable<Dish> GetSelectedForStandard(int? restaurantId)
         {
-                return _context.Dishes.Where(x => x.RestaurantId == restaurantId && x.StatusId == 1).Include(x => x.Restaurant);
+            return _context.Dishes.Where(x => x.RestaurantId == restaurantId && x.StatusId == 1).Include(x => x.Restaurant);
         }
 
-        public Dish AddDish (Dish dish)
+        public Dish AddDish(Dish dish)
         {
             _context.Add(dish);
             _context.SaveChanges();
             return dish;
         }
 
-        public void ChangeStatus (int dishId, int statusId)
+        public void ChangeStatus(int dishId, int statusId)
         {
             _context.Dishes.FirstOrDefault(x => x.DishId == dishId)!.StatusId = statusId + 1;
             _context.SaveChanges();

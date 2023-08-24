@@ -5,16 +5,9 @@ using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
 using RestaurantApp.View;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
 
 namespace RestaurantApp.ViewModel
 {
@@ -25,7 +18,7 @@ namespace RestaurantApp.ViewModel
             _restaurantsService = restaurantsService;
             _userService = userService;
 
-            CollectionCreator = new ();
+            CollectionCreator = new();
 
             RestaurantsList = new ObservableCollection<Restaurant>(_restaurantsService.GetAll());
             RestaurantsCollection = CollectionCreator.GetCollection(RestaurantsList);
@@ -146,7 +139,7 @@ namespace RestaurantApp.ViewModel
 
         public void OpenAddtionToEdit()
         {
-            if(SelectedRestaurant is null)
+            if (SelectedRestaurant is null)
             {
                 return;
             }

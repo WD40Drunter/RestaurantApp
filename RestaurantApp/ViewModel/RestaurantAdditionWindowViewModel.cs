@@ -5,11 +5,6 @@ using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
@@ -37,10 +32,10 @@ namespace RestaurantApp.ViewModel
         private Restaurant? _oldEditRestaurant;
 
         [ObservableProperty]
-        private string? _restaurantName;
+        private string? _name;
 
         [ObservableProperty]
-        private string? _restaurantRating;
+        private string? _rating;
 
         [ObservableProperty]
         private string? _openingHour;
@@ -49,45 +44,45 @@ namespace RestaurantApp.ViewModel
         private string? _closingHour;
 
         [ObservableProperty]
-        private string? _restaurantAdressCountry;
+        private string? _adressCountry;
 
         [ObservableProperty]
-        private string? _restaurantAdressCity;
+        private string? _adressCity;
 
         [ObservableProperty]
-        private string? _restaurantAdressStreet;
+        private string? _adressStreet;
 
         [ObservableProperty]
-        private string? _restaurantAdressHouseNumber;
+        private string? _adressHouseNumber;
 
         [ObservableProperty]
-        private string? _restaurantAdressPostalCode;
+        private string? _adressPostalCode;
 
         public void AssignRestaurantValuesForEdit(Restaurant restaurant)
         {
             _oldEditRestaurant = restaurant;
-            RestaurantName = restaurant.Name;
-            RestaurantRating = restaurant.Rating.ToString();
+            Name = restaurant.Name;
+            Rating = restaurant.Rating.ToString();
             OpeningHour = restaurant.OpeningHour;
             ClosingHour = restaurant.ClosingHour;
-            RestaurantAdressCountry = restaurant.Adress!.Country;
-            RestaurantAdressCity = restaurant.Adress!.City;
-            RestaurantAdressStreet = restaurant.Adress!.Street;
-            RestaurantAdressHouseNumber = restaurant.Adress!.HouseNumber;
-            RestaurantAdressPostalCode = restaurant.Adress!.PostalCode;
+            AdressCountry = restaurant.Adress!.Country;
+            AdressCity = restaurant.Adress!.City;
+            AdressStreet = restaurant.Adress!.Street;
+            AdressHouseNumber = restaurant.Adress!.HouseNumber;
+            AdressPostalCode = restaurant.Adress!.PostalCode;
         }
 
         public bool IsEverythingWellInputed()
         {
-            if (!Validator.IsStringNotNull(RestaurantName)
-                || !Validator.IsStringNotNull(RestaurantRating)
+            if (!Validator.IsStringNotNull(Name)
+                || !Validator.IsStringNotNull(Rating)
                 || !Validator.IsStringNotNull(OpeningHour)
                 || !Validator.IsStringNotNull(ClosingHour)
-                || !Validator.IsStringNotNull(RestaurantAdressCountry)
-                || !Validator.IsStringNotNull(RestaurantAdressCity)
-                || !Validator.IsStringNotNull(RestaurantAdressStreet)
-                || !Validator.IsStringNotNull(RestaurantAdressHouseNumber)
-                || !Validator.IsStringNotNull(RestaurantAdressPostalCode))
+                || !Validator.IsStringNotNull(AdressCountry)
+                || !Validator.IsStringNotNull(AdressCity)
+                || !Validator.IsStringNotNull(AdressStreet)
+                || !Validator.IsStringNotNull(AdressHouseNumber)
+                || !Validator.IsStringNotNull(AdressPostalCode))
             {
                 return false;
             }
@@ -95,7 +90,7 @@ namespace RestaurantApp.ViewModel
             {
                 return false;
             }
-            if (!Validator.IsHouseNumberValid(RestaurantAdressHouseNumber!))
+            if (!Validator.IsHouseNumberValid(AdressHouseNumber!))
             {
                 return false;
             }
@@ -104,16 +99,16 @@ namespace RestaurantApp.ViewModel
 
         public void FinishAction()
         {
-            RestaurantRating = RestaurantRating!.Replace('_', '0');
+            Rating = Rating!.Replace('_', '0');
             OpeningHour = OpeningHour!.Replace('_', '0');
             ClosingHour = ClosingHour!.Replace('_', '0');
-            RestaurantAdressPostalCode = RestaurantAdressPostalCode!.Replace('_', '0');
+            AdressPostalCode = AdressPostalCode!.Replace('_', '0');
 
             if (!IsEverythingWellInputed())
             {
                 return;
             }
-            Adress adress = new(RestaurantAdressCountry!, RestaurantAdressCity!, RestaurantAdressStreet!, RestaurantAdressHouseNumber!, RestaurantAdressPostalCode!);
+            Adress adress = new(AdressCountry!, AdressCity!, AdressStreet!, AdressHouseNumber!, AdressPostalCode!);
             if (_oldEditRestaurant is null)
             {
                 AddRestaurant(adress);
@@ -128,14 +123,14 @@ namespace RestaurantApp.ViewModel
         public void AddRestaurant(Adress adress)
         {
             int adressId = _adressServices.AddAdress(adress);
-            Restaurant restaurant = new(RestaurantName!, Convert.ToDecimal(RestaurantRating!), OpeningHour!, ClosingHour!, adressId);
+            Restaurant restaurant = new(Name!, Convert.ToDecimal(Rating!), OpeningHour!, ClosingHour!, adressId);
             WeakReferenceMessenger.Default.Send(new SendRestaurantAddValueMessage(restaurant));
         }
 
         public void EditRestaurant(Adress adress)
         {
-            _oldEditRestaurant!.Adress = _adressServices.EditAdress(_oldEditRestaurant!.Adress!, adress);
-            Restaurant restaurant = new(RestaurantName!, Convert.ToDecimal(RestaurantRating!), OpeningHour!, ClosingHour!, _oldEditRestaurant.Adress.AdressId);
+            _adressServices.EditAdress(_oldEditRestaurant!.Adress!, adress);
+            Restaurant restaurant = new(Name!, Convert.ToDecimal(Rating!), OpeningHour!, ClosingHour!, _oldEditRestaurant.AdressId);
             WeakReferenceMessenger.Default.Send(new SendRestaurantEditValueMessage(restaurant));
         }
 

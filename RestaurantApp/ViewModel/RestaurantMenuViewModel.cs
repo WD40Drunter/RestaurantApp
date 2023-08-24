@@ -4,13 +4,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace RestaurantApp.ViewModel
@@ -21,7 +16,7 @@ namespace RestaurantApp.ViewModel
         {
             _dishService = dishService;
             _statusServices = statusServices;
-            CollectionCreator = new ();
+            CollectionCreator = new();
 
             AddDishCommand = new RelayCommand(AddDish);
 
@@ -36,7 +31,7 @@ namespace RestaurantApp.ViewModel
             WeakReferenceMessenger.Default.Register<SendUserMessage>(this, (r, m) =>
             {
                 LoggedInUser = m.Value;
-                if(LoggedInUser.Access == "Admin")
+                if (LoggedInUser.Access == "Admin")
                 {
                     DishesList = new(_dishService.GetSelected(RestaurantId));
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
@@ -75,7 +70,7 @@ namespace RestaurantApp.ViewModel
         private string? _searchDishValue;
 
         [ObservableProperty]
-        private string? _dishName;
+        private string? _name;
 
         [ObservableProperty]
         private string? _dishStatus;
@@ -96,21 +91,21 @@ namespace RestaurantApp.ViewModel
 
         public void ResetInputs()
         {
-            DishName = string.Empty;
+            Name = string.Empty;
         }
 
         public void AddDish()
         {
-            if(LoggedInUser!.Access == "Standard")
+            if (LoggedInUser!.Access == "Standard")
             {
                 MessageBox.Show("Brak uprawnień");
                 return;
             }
-            if(!Validator.IsStringNotNull(DishName))
+            if (!Validator.IsStringNotNull(Name))
             {
                 return;
             }
-            Dish dish = new(DishName!, 1, RestaurantId);
+            Dish dish = new(Name!, 1, RestaurantId);
 
             DishesList?.Add(_dishService.AddDish(dish));
 
@@ -126,7 +121,7 @@ namespace RestaurantApp.ViewModel
 
         partial void OnStatusColumnWidthChanged(string value)
         {
-            if(LoggedInUser!.Access == "Standard")
+            if (LoggedInUser!.Access == "Standard")
             {
                 StatusColumnWidth = "0";
                 return;

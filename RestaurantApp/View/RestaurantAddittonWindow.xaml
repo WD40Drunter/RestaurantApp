@@ -14,7 +14,7 @@
                         >
                 <Label Content="Nazwa:"
                        />
-                <TextBox Text="{Binding RestaurantName}"
+                <TextBox Text="{Binding Name}"
                          Width="100"
                          MaxLength="50"
                          />
@@ -22,7 +22,7 @@
                        Content="Ocena:"
                        />
                 <xctk:MaskedTextBox Mask="0.00"
-                                    Text="{Binding RestaurantRating}"
+                                    Text="{Binding Rating}"
                                     Width="25"
                                     TextAlignment="Center"
                                     />
@@ -50,14 +50,14 @@
                         Margin="5">
                 <Label Content="Kraj:"
                        />
-                <TextBox Text="{Binding RestaurantAdressCountry}"
+                <TextBox Text="{Binding AdressCountry}"
                          Width="50"
                          MaxLength="25"
                          />
                 <Label Content="Miasto:"
                        Margin="20 0 0 0"
                        />
-                <TextBox Text="{Binding RestaurantAdressCity}"
+                <TextBox Text="{Binding AdressCity}"
                          Width="50"
                          MaxLength="30"
                          />
@@ -66,14 +66,14 @@
                         Margin="5">
                 <Label Content="Ul.:"
                        />
-                <TextBox Text="{Binding RestaurantAdressStreet}"
+                <TextBox Text="{Binding AdressStreet}"
                          Width="70"
                          MaxLength="20"
                          />
                 <Label Content="Nr. domu:"
                        Margin="20 0 0 0"
                        />
-                <TextBox Text="{Binding RestaurantAdressHouseNumber}"
+                <TextBox Text="{Binding AdressHouseNumber}"
                          Width="30"
                          MaxLength="10"
                          />
@@ -84,7 +84,7 @@
                 <Label Content="Kod pocztowy:"
                        />
                 <xctk:MaskedTextBox Mask="00-000"
-                                    Text="{Binding RestaurantAdressPostalCode}"
+                                    Text="{Binding AdressPostalCode}"
                                     Width="50"
                                     TextAlignment="Center"
                                     />
