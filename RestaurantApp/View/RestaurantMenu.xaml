@@ -9,6 +9,7 @@
         Title="RestaurantMenu" Height="450" Width="800">
     <Window.Resources>
         <converters:SubstractOneOrAddOneConverter x:Key="SubstractOneOrAddOneConverter"/>
+        <converters:UserPrivilageToVisibilityConverter x:Key="UserPrivilageToVisibilityConverter"/>
     </Window.Resources>
     <Grid>
         <ListView ItemsSource="{Binding DishesCollection}">
@@ -17,9 +18,10 @@
                     <GridViewColumn Header="Nazwa dania"
                                     DisplayMemberBinding="{Binding Name}"
                                     />
-                    <GridViewColumn Header="Status"
-                                    Width="100"
+                    <GridViewColumn Width="{Binding StatusColumnWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                     >
+                        <GridViewColumnHeader Content="Status"
+                                              Visibility="{Binding LoggedInUser.Access, Converter={StaticResource UserPrivilageToVisibilityConverter}}"/>
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.StatusCollection}"

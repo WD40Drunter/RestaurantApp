@@ -34,7 +34,14 @@ namespace RestaurantApp.ViewModel
                 DishesCollection = CollectionCreator.GetCollection(DishesList);
             });
 
-
+            WeakReferenceMessenger.Default.Register<SendUserMessage>(this, (r, m) =>
+            {
+                LoggedInUser = m.Value;
+                if(LoggedInUser.Access == "Admin")
+                {
+                    StatusColumnWidth = "100";
+                }
+            });
         }
         private readonly IDishService _dishService;
         private readonly IStatusServices _statusServices;
@@ -43,6 +50,9 @@ namespace RestaurantApp.ViewModel
         public int RestaurantId { get; set; }
 
         public IRelayCommand AddDishCommand { get; }
+
+        [ObservableProperty]
+        private string _statusColumnWidth = "0";
 
         [ObservableProperty]
         private ObservableCollection<Dish>? _dishesList;
@@ -64,6 +74,9 @@ namespace RestaurantApp.ViewModel
 
         [ObservableProperty]
         private ICollectionView? _statusCollection;
+
+        [ObservableProperty]
+        private User? _loggedInUser;
 
         public void RefreshDishesCollection()
         {
@@ -93,6 +106,16 @@ namespace RestaurantApp.ViewModel
         {
             CollectionCreator.SearchDishValue = value;
             RefreshDishesCollection();
+        }
+
+        partial void OnStatusColumnWidthChanged(string value)
+        {
+            if(LoggedInUser!.Access == "Standard")
+            {
+                StatusColumnWidth = "0";
+                return;
+            }
+            StatusColumnWidth = value;
         }
     }
 }
