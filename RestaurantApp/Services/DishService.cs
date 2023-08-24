@@ -12,6 +12,7 @@ namespace RestaurantApp.Services
     {
         IEnumerable<Dish> GetAll();
         IEnumerable<Dish> GetSelected(int? restaurantId);
+        IEnumerable<Dish> GetSelectedForStandard(int? restaurantId);
         Dish AddDish (Dish dish);
         void ChangeStatus(int dishId, int statusId);
     }
@@ -31,6 +32,11 @@ namespace RestaurantApp.Services
         public IEnumerable<Dish> GetSelected(int? restaurantId)
         {
                 return _context.Dishes.Where(x => x.RestaurantId == restaurantId).Include(x => x.Restaurant);
+        }
+
+        public IEnumerable<Dish> GetSelectedForStandard(int? restaurantId)
+        {
+                return _context.Dishes.Where(x => x.RestaurantId == restaurantId && x.StatusId == 1).Include(x => x.Restaurant);
         }
 
         public Dish AddDish (Dish dish)

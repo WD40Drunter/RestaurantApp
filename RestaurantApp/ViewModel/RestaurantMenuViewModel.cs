@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
@@ -30,8 +31,6 @@ namespace RestaurantApp.ViewModel
             WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
             {
                 RestaurantId = (int)(m.Value ?? 0);
-                DishesList = new(_dishService.GetSelected(m.Value));
-                DishesCollection = CollectionCreator.GetCollection(DishesList);
             });
 
             WeakReferenceMessenger.Default.Register<SendUserMessage>(this, (r, m) =>
@@ -39,7 +38,14 @@ namespace RestaurantApp.ViewModel
                 LoggedInUser = m.Value;
                 if(LoggedInUser.Access == "Admin")
                 {
+                    DishesList = new(_dishService.GetSelected(RestaurantId));
+                    DishesCollection = CollectionCreator.GetCollection(DishesList);
                     StatusColumnWidth = "100";
+                }
+                else
+                {
+                    DishesList = new(_dishService.GetSelectedForStandard(RestaurantId));
+                    DishesCollection = CollectionCreator.GetCollection(DishesList);
                 }
             });
 
@@ -95,6 +101,11 @@ namespace RestaurantApp.ViewModel
 
         public void AddDish()
         {
+            if(LoggedInUser!.Access == "Standard")
+            {
+                MessageBox.Show("Brak uprawnień");
+                return;
+            }
             if(!Validator.IsStringNotNull(DishName))
             {
                 return;
