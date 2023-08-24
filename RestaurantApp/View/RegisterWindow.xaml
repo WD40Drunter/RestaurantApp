@@ -36,7 +36,8 @@
                         Margin="5">
                 <Label Content="Uprawnienia:"
                        />
-                <ComboBox SelectedItem="{Binding PrivilageValue, Converter={StaticResource ComboBoxValue2StringConverter}}">
+                <ComboBox SelectedItem="{Binding PrivilageValue, Converter={StaticResource ComboBoxValue2StringConverter}}"
+                          SelectedIndex="0">
                     <ComboBoxItem Content="Standard"/>
                     <ComboBoxItem Content="Admin"/>
                 </ComboBox>

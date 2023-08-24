@@ -83,34 +83,10 @@ namespace RestaurantApp.ViewModel
         {
             RestaurantsCollection?.Refresh();
         }
-
-        public bool IsLoggedIn()
-        {
-            if (LoggedInUser is null)
-            {
-                MessageBox.Show("Zaloguj się");
-                return false;
-            }
-            return true;
-        }
-
-        public bool IsAdmin()
-        {
-            if (!IsLoggedIn())
-            {
-                return false;
-            }
-            if (LoggedInUser!.Access != "Admin")
-            {
-                MessageBox.Show("Brak uprawnień");
-                return false;
-            }
-            return true;
-        }
-
+        
         public void OpenMenuWindow(object? obj)
         {
-            if (!IsLoggedIn())
+            if (!UserValidator.IsLoggedIn(LoggedInUser))
             {
                 return;
             }
@@ -129,7 +105,7 @@ namespace RestaurantApp.ViewModel
 
         public void OpenAdditionToAdd()
         {
-            if (!IsAdmin())
+            if (!UserValidator.IsAdmin(LoggedInUser))
             {
                 return;
             }
@@ -143,7 +119,7 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            if (!IsAdmin())
+            if (!UserValidator.IsAdmin(LoggedInUser))
             {
                 return;
             }

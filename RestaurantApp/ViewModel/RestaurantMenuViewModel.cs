@@ -6,7 +6,6 @@ using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
@@ -96,9 +95,8 @@ namespace RestaurantApp.ViewModel
 
         public void AddDish()
         {
-            if (LoggedInUser!.Access == "Standard")
+            if (!UserValidator.IsAdmin(LoggedInUser))
             {
-                MessageBox.Show("Brak uprawnień");
                 return;
             }
             if (!Validator.IsStringNotNull(Name))
