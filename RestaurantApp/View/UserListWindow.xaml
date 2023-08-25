@@ -22,7 +22,6 @@
                             <DataTemplate>
                                 <ComboBox 
                                           SelectedIndex="{Binding Access, Converter={StaticResource AccessToIndexAndBackConverter}}"
-                                          
                                           Tag="{Binding UserId}"
                                           >
                                     <ComboBoxItem TabIndex="0"

@@ -22,8 +22,8 @@ namespace RestaurantApp.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            string zad = (string)value;
-            if (zad == "1")
+            int zad = (int)value;
+            if (zad == 1)
             {
                 return "Admin";
             }
