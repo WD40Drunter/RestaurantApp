@@ -151,7 +151,7 @@ namespace RestaurantApp.ViewModel
 
         public void EditRestaurant(Restaurant restaurant)
         {
-            SelectedRestaurant = _restaurantsService.EditRestaurant(SelectedRestaurant!, restaurant);
+            _restaurantsService.EditRestaurant(SelectedRestaurant!, restaurant);
 
             RefreshRestaurantsCollection();
         }
