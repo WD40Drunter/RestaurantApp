@@ -28,9 +28,6 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private string? _inputPassword;
 
-        [ObservableProperty]
-        private string _privilageValue = "Standard";
-
         public bool ValidateLogin()
         {
             if (string.IsNullOrEmpty(InputLogin))
@@ -107,7 +104,7 @@ namespace RestaurantApp.ViewModel
                 return;
             }
 
-            User user = new(InputLogin!, SecretHasher.Hash(InputPassword!), PrivilageValue);
+            User user = new(InputLogin!, SecretHasher.Hash(InputPassword!), "Standard");
             _userService.AddUser(user);
 
             CloseWindow();
