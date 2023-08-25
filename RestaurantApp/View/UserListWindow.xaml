@@ -20,13 +20,8 @@
                     <GridViewColumn Header="Uprawnienia">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-<<<<<<< Updated upstream
                                 <ComboBox 
                                           SelectedIndex="{Binding Access, Converter={StaticResource AccessToIndexAndBackConverter}}"
-=======
-                                <ComboBox SelectedIndex="{Binding Access, Converter={StaticResource AccessToIndexAndBackConverter}}"
->>>>>>> Stashed changes
-                                          
                                           Tag="{Binding UserId}"
                                           >
                                     <ComboBoxItem TabIndex="0"
