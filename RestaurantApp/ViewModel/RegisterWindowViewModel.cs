@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class RegisterWindowViewModel : ObservableRecipient
+    public partial class RegisterWindowViewModel : SolutionViewModel
     {
         public RegisterWindowViewModel(IUserService userService)
         {
