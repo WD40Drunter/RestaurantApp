@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System;
@@ -21,6 +23,13 @@ namespace RestaurantApp.ViewModel
 
             UserList = new ObservableCollection<User>(_userService.GetUsers());
             UserCollection = CollectionCreator.GetCollection(UserList);
+
+            WeakReferenceMessenger.Default.Register<ValuesOfAccessToChangeItInDatabaseMessage>(this, (r, m) =>
+            {
+                int userId = int.Parse(m.Value[0]);
+                string newAccess = m.Value[1];
+                _userService.UpdateUserAccess(userId, newAccess);
+            });
 
         }
         private readonly IUserService _userService;
