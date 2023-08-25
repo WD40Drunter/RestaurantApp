@@ -11,6 +11,7 @@ namespace RestaurantApp.Services
         bool Exists(string login);
         User? GetUser(string login);
         void AddUser(User user);
+        void UpdateUserAccess(int userId, string newAccess);
     }
     public class UserService : IUserService
     {
@@ -39,6 +40,12 @@ namespace RestaurantApp.Services
         public IEnumerable<User> GetUsers()
         {
             return _context.Users;
+        }
+
+        public void UpdateUserAccess(int userId, string newAccess)
+        {
+            _context.Users.FirstOrDefault(x => x.UserId == userId)!.Access = newAccess;
+            _context.SaveChanges();
         }
     }
 }

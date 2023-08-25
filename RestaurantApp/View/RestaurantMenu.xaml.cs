@@ -22,8 +22,7 @@ namespace RestaurantApp.View
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ComboBox? comboBox = e.Source as ComboBox;
-            if (comboBox is null)
+            if (e.Source is not ComboBox comboBox)
             {
                 return;
             }
