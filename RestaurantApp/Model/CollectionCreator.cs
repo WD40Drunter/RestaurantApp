@@ -13,6 +13,7 @@ namespace RestaurantApp.Model
 
         public string? SearchRestaurantValue { get; set; }
         public string? SearchDishValue { get; set; }
+        public string? SearchUserValue { get; set; }
 
         public ICollectionView GetCollection(ObservableCollection<Restaurant>? collection)
         {
@@ -34,7 +35,7 @@ namespace RestaurantApp.Model
         public ICollectionView GetCollection(ObservableCollection<Dish>? collection)
         {
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(collection);
-            collectionView.SortDescriptions.Add(new SortDescription(nameof(Restaurant.Name), ListSortDirection.Ascending));
+            collectionView.SortDescriptions.Add(new SortDescription(nameof(Dish.Name), ListSortDirection.Ascending));
             collectionView.Filter = FilterDishes;
             return collectionView;
         }
@@ -53,6 +54,23 @@ namespace RestaurantApp.Model
             ICollectionView collectionView = CollectionViewSource.GetDefaultView(collection);
             collectionView.SortDescriptions.Add(new SortDescription(nameof(Status.StatusId), ListSortDirection.Ascending));
             return collectionView;
+        }
+
+        public ICollectionView GetCollection(ObservableCollection<User>? collection)
+        {
+            ICollectionView collectionView = CollectionViewSource.GetDefaultView(collection);
+            collectionView.SortDescriptions.Add(new SortDescription(nameof(User.Login), ListSortDirection.Ascending));
+            collectionView.Filter = FilterUsers;
+            return collectionView;
+        }
+
+        private bool FilterUsers(object obj)
+        {
+            if (obj is not User dish)
+            {
+                return false;
+            }
+            return dish.Login.Contains(SearchUserValue ?? string.Empty, StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

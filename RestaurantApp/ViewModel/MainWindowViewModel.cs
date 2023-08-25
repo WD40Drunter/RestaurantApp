@@ -25,6 +25,8 @@ namespace RestaurantApp.ViewModel
 
             OpenMenuWindowCommand = new RelayCommand<object?>(OpenMenuWindow);
             OpenRegisterWindowCommand = new RelayCommand(OpenRegisterWindow);
+            OpenUserListWindowCommand = new RelayCommand(OpenUserListWindow);
+
             LogoutCommand = new RelayCommand(Logout);
 
             AddRestaurantCommand = new RelayCommand(OpenAdditionToAdd);
@@ -51,6 +53,8 @@ namespace RestaurantApp.ViewModel
 
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
         public IRelayCommand OpenRegisterWindowCommand { get; }
+        public IRelayCommand OpenUserListWindowCommand { get; }
+
         public IRelayCommand LogoutCommand { get; }
 
         public IRelayCommand AddRestaurantCommand { get; }
@@ -107,6 +111,16 @@ namespace RestaurantApp.ViewModel
             }
             RestaurantAddittonWindow restaurantAddittonWindow = new();
             restaurantAddittonWindow.Show();
+        }
+
+        public void OpenUserListWindow()
+        {
+            if (!UserValidator.IsAdmin(LoggedInUser))
+            {
+                return;
+            }
+            UserListWindow userListWindow = new();
+            userListWindow.Show();
         }
 
         public void OpenAddtionToEdit()
