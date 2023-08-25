@@ -11,7 +11,7 @@ using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class MainWindowViewModel : ObservableRecipient
+    public partial class MainWindowViewModel : SolutionViewModel
     {
         public MainWindowViewModel(IRestaurantsService restaurantsService, IUserService userService)
         {
@@ -69,9 +69,6 @@ namespace RestaurantApp.ViewModel
         private string? _searchRestaurantValue;
 
         [ObservableProperty]
-        private User? _loggedInUser;
-
-        [ObservableProperty]
         private string? _inputLogin;
 
         [ObservableProperty]
@@ -94,7 +91,6 @@ namespace RestaurantApp.ViewModel
             RestaurantMenu restaurantMenu = new();
             restaurantMenu.Show();
             WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurant?.RestaurantId));
-            WeakReferenceMessenger.Default.Send(new SendUserMessage(LoggedInUser!));
         }
 
         public static void OpenRegisterWindow()

@@ -9,7 +9,7 @@ using System.ComponentModel;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class RestaurantMenuViewModel : ObservableObject
+    public partial class RestaurantMenuViewModel : SolutionViewModel
     {
         public RestaurantMenuViewModel(IDishService dishService, IStatusServices statusServices)
         {
@@ -25,12 +25,8 @@ namespace RestaurantApp.ViewModel
             WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
             {
                 RestaurantId = m.Value ?? 0;
-            });
 
-            WeakReferenceMessenger.Default.Register<SendUserMessage>(this, (r, m) =>
-            {
-                LoggedInUser = m.Value;
-                if (UserValidator.IsAdmin(LoggedInUser))
+                if (LoggedInUser!.Access == "Admin")
                 {
                     DishesList = new(_dishService.GetSelected(RestaurantId));
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
@@ -81,9 +77,6 @@ namespace RestaurantApp.ViewModel
 
         [ObservableProperty]
         private ICollectionView? _statusCollection;
-
-        [ObservableProperty]
-        private User? _loggedInUser;
 
         public void RefreshDishesCollection()
         {
