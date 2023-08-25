@@ -1,13 +1,16 @@
 ﻿using RestaurantApp.Model;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RestaurantApp.Services
 {
     public interface IUserService
     {
-        public bool Exists(string login);
-        public User? GetUser(string login);
-        public void AddUser(User user);
+        IEnumerable<User> GetUsers();
+        bool Exists(string login);
+        User? GetUser(string login);
+        void AddUser(User user);
     }
     public class UserService : IUserService
     {
@@ -31,6 +34,11 @@ namespace RestaurantApp.Services
         {
             _context.Users.Add(user);
             _context.SaveChanges();
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            return _context.Users;
         }
     }
 }

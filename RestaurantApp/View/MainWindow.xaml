@@ -105,23 +105,30 @@
                     Click="LoginButton_Click"
                     Width="50"
                     Height="30"
-                    Margin="5"
+                    Margin="5 0 -50 0"
                         Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                     />
                 <Button Content="Logout"
                         Command="{Binding LogoutCommand}"
                         Width="50"
                         Height="30"
-                        Margin="0 -150 -55 0"
+                        Margin="0 -150 0 0"
                         Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedInButtonVisibility}}"
                         />
                 <Button Content="Register"
                     Command="{Binding OpenRegisterWindowCommand}"
                     Width="50"
                     Height="30"
-                    Margin="5"
+                    Margin="5 0 -50 0"
                         Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                     />
+                <Button Content="UserList"
+                        Command="{Binding OpenUserListWindowCommand}"
+                        Width="50"
+                        Height="30"
+                        Margin="0 -150 0 0"
+                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedInButtonVisibility}}"
+                        />
             </StackPanel>
         </StackPanel>
         <StackPanel Orientation="Horizontal"
