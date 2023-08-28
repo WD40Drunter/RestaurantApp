@@ -27,8 +27,6 @@
                                 <ComboBox ItemsSource="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ListView}, Path=DataContext.StatusCollection}"
                                           DisplayMemberPath="Name"
                                           SelectedIndex="{Binding StatusId, Converter={StaticResource SubstractOneOrAddOneConverter}}"
-                                          SelectionChanged="ComboBox_SelectionChanged"
-                                          Tag="{Binding DishId}"
                                           />
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>

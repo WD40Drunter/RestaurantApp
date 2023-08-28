@@ -20,16 +20,5 @@ namespace RestaurantApp.View
 
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (e.Source is not ComboBox comboBox)
-            {
-                return;
-            }
-            string[] valuesForDatabase = new string[2];
-            valuesForDatabase[0] = comboBox.Tag.ToString()!;
-            valuesForDatabase[1] = comboBox.SelectedIndex.ToString();
-            WeakReferenceMessenger.Default.Send(new ValuesOfStatusToChangeItInDatabaseMessage(valuesForDatabase));
-        }
     }
 }

@@ -5,11 +5,14 @@ using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class RestaurantMenuViewModel : ObservableRecipient
+    public partial class RestaurantMenuViewModel : ObservableRecipient, INotifyPropertyChanged
     {
         public RestaurantMenuViewModel(IDishService dishService, IStatusServices statusServices, ILoggedInUserServices loggedInUserServices)
         {
@@ -30,6 +33,11 @@ namespace RestaurantApp.ViewModel
                 if (_loggedInUserServices.GetUserAccess() == "Admin")
                 {
                     DishesList = new(_dishService.GetSelected(RestaurantId));
+                    foreach (Dish dish in DishesList)
+                    {
+                        dish.PropertyChanged += new PropertyChangedEventHandler(Dish_PropertyChanged);
+                    }
+                    DishesList.CollectionChanged += new NotifyCollectionChangedEventHandler(DishesList_PropertyChanged);
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
                     StatusColumnWidth = "100";
                     IsAdmin = true;
@@ -40,13 +48,6 @@ namespace RestaurantApp.ViewModel
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
                     IsAdmin = false;
                 }
-            });
-
-            WeakReferenceMessenger.Default.Register<ValuesOfStatusToChangeItInDatabaseMessage>(this, (r, m) =>
-            {
-                int dishId = int.Parse(m.Value[0]);
-                int statusId = int.Parse(m.Value[1]);
-                _dishService.ChangeStatus(dishId, statusId);
             });
         }
         private readonly IDishService _dishService;
@@ -127,6 +128,29 @@ namespace RestaurantApp.ViewModel
                 return;
             }
             StatusColumnWidth = value;
+        }
+
+        public void DishesList_PropertyChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems is not null)
+            {
+                foreach (Dish dish in e.OldItems)
+                {
+                    dish.PropertyChanged -= new PropertyChangedEventHandler(Dish_PropertyChanged);
+                }
+            }
+            if (e.NewItems is not null)
+            {
+                foreach (Dish dish in e.NewItems)
+                {
+                    dish.PropertyChanged += new PropertyChangedEventHandler(Dish_PropertyChanged);
+                }
+            }
+        }
+         
+        public void Dish_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            _dishService.ChangeStatus();
         }
     }
 }
