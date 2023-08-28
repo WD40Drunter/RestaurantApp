@@ -6,7 +6,7 @@
         xmlns:converters="clr-namespace:RestaurantApp.Converters"
         xmlns:local="clr-namespace:RestaurantApp" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:MainWindowViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Lista Restauracji" Height="450" Width="800">
     <Window.Resources>
         <converters:UserLoggedInButtonVisibility x:Key="UserLoggedInButtonVisibility"/>
         <converters:UserLoggedOutButtonVisibility x:Key="UserLoggedOutButtonVisibility"/>

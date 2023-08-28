@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RestaurantApp" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RegisterWindowViewModel}"
         mc:Ignorable="d"
-        Title="RegisterWindow" Height="450" Width="800">
+        Title="Rejestracja" Height="200" Width="250">
     <Grid>
         <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
                     Margin="5">
             <StackPanel Orientation="Horizontal"
                         Margin="5">
@@ -28,12 +30,17 @@
                          MaxLength="100"
                          />
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Dodaj"
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center">
+                <Button Content="Utwórz"
                     Margin="10"
+                        Height="30"
+                        Width="50"
                     Command="{Binding AddUserCommand}"/>
                 <Button Content="Anuluj"
                         Margin="0 10"
+                        Height="30"
+                        Width="50"
                         Command="{Binding CloseWindowCommand}"/>
             </StackPanel>
         </StackPanel>

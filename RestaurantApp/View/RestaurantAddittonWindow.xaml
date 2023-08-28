@@ -4,9 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:converters="clr-namespace:RestaurantApp.Converters"
         xmlns:local="clr-namespace:RestaurantApp.View" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RestaurantAdditionWindowViewModel}"
         mc:Ignorable="d"
-        Title="RestaurantAddittonWindow" Height="450" Width="800">
+        Height="350" Width="300">
+    <Window.Resources>
+        <converters:ObjectToTitleConverter x:Key="ObjectToTitleConverter"/>
+    </Window.Resources>
+    <Window.Title>
+        <Binding Path="OldEditRestaurant" Converter="{StaticResource ObjectToTitleConverter}"/>
+    </Window.Title>
     <Grid>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal"
