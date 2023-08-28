@@ -1,20 +1,13 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
-using RestaurantApp.Messages;
 using RestaurantApp.Model;
 using RestaurantApp.Services;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class UserListWindowViewModel : ObservableRecipient
+    public partial class UserListWindowViewModel : ObservableRecipient, INotifyPropertyChanged
     {
         public UserListWindowViewModel(IUserService userService)
         {
@@ -25,6 +18,7 @@ namespace RestaurantApp.ViewModel
             UserList = new ObservableCollection<User>(_userService.GetUsers());
             UserCollection = CollectionCreator.GetCollection(UserList);
 
+            UserList.CollectionChanged += new NotifyCollectionChangedEventHandler(UserList_PropertyChanged);
             foreach (User user in UserList)
             {
                 user.PropertyChanged += new PropertyChangedEventHandler(User_PropertyChanged);
