@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 
 namespace RestaurantApp.Converters
@@ -13,7 +9,7 @@ namespace RestaurantApp.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             string zad = (string)value;
-            if(zad == "Admin")
+            if (zad == "Admin")
             {
                 return "1";
             }
