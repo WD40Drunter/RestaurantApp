@@ -14,8 +14,6 @@ namespace RestaurantApp.ViewModel
         {
             _adressServices = adressServices;
 
-            _oldEditRestaurant = null;
-
             FinishActionCommand = new RelayCommand(FinishAction);
             CloseWindowCommand = new RelayCommand(CloseWindow);
 
