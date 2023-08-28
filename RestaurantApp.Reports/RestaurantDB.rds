@@ -3,7 +3,6 @@
   <ConnectionProperties>
     <Extension>SQL</Extension>
     <ConnectString>Data Source=localhost;Initial Catalog=RestaurantDB</ConnectString>
-    <Prompt>Specify a user name and password for data source RestaurantDB:</Prompt>
   </ConnectionProperties>
   <DataSourceID>824270a5-8ca2-4066-8efe-81b07779b43a</DataSourceID>
 </RptDataSource>
