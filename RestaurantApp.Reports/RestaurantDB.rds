@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" Name="RestaurantDB">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=localhost;Initial Catalog=RestaurantDB</ConnectString>
+    <Prompt>Specify a user name and password for data source RestaurantDB:</Prompt>
+  </ConnectionProperties>
+  <DataSourceID>824270a5-8ca2-4066-8efe-81b07779b43a</DataSourceID>
+</RptDataSource>
