@@ -1,4 +1,5 @@
 ﻿using RestaurantApp.Model;
+using System.Linq;
 
 namespace RestaurantApp.Services
 {
@@ -6,6 +7,7 @@ namespace RestaurantApp.Services
     {
         int AddAdress(Adress adress);
         void EditAdress(Adress oldValue, Adress newValue);
+        void DeleteAdress(int adressId);
     }
     public class AdressServices : IAdressServices
     {
@@ -34,5 +36,10 @@ namespace RestaurantApp.Services
             _context.SaveChanges();
         }
 
+        public void DeleteAdress(int adressId)
+        {
+            _context.Adresses.Remove(_context.Adresses.First(x => x.AdressId == adressId));
+            _context.SaveChanges();
+        }
     }
 }
