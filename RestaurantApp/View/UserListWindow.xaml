@@ -20,9 +20,7 @@
                     <GridViewColumn Header="Uprawnienia">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ComboBox SelectionChanged="ComboBox_SelectionChanged"
-                                          SelectedIndex="{Binding Access, Converter={StaticResource AccessToIndexAndBackConverter}}"
-                                          Tag="{Binding UserId}"
+                                <ComboBox SelectedIndex="{Binding Access, Converter={StaticResource AccessToIndexAndBackConverter}}"
                                           >
                                     <ComboBoxItem TabIndex="0"
                                         Content="Standard"/>

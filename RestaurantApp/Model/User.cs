@@ -1,8 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace RestaurantApp.Model
 {
-    public class User
+    public class User : INotifyPropertyChanged
     {
         [Key]
         public int UserId { get; set; }
@@ -17,6 +20,26 @@ namespace RestaurantApp.Model
 
         public string Login { get; set; }
         public string Password { get; set; }
-        public string Access { get; set; }
+
+        private string? _access;
+        public string Access 
+        { 
+            get 
+            { 
+                return _access ?? string.Empty;
+            } 
+            set 
+            {
+                _access = value;
+                NotifyPropertyChanged();
+            } 
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
