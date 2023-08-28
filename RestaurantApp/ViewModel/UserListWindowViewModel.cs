@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class UserListWindowViewModel : SolutionViewModel
+    public partial class UserListWindowViewModel : ObservableRecipient
     {
         public UserListWindowViewModel(IUserService userService)
         {

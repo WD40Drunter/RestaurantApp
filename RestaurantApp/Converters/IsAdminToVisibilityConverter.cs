@@ -4,11 +4,11 @@ using System.Windows.Data;
 
 namespace RestaurantApp.Converters
 {
-    class UserPrivilageToVisibilityConverter : IValueConverter
+    class IsAdminToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value.ToString() == "Admin")
+            if ((bool)value)
             {
                 return "Visible";
             }

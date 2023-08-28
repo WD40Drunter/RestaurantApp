@@ -8,7 +8,7 @@ using System;
 
 namespace RestaurantApp.ViewModel
 {
-    internal partial class RestaurantAdditionWindowViewModel : SolutionViewModel
+    internal partial class RestaurantAdditionWindowViewModel : ObservableRecipient
     {
         public RestaurantAdditionWindowViewModel(IAdressServices adressServices)
         {
