@@ -11,12 +11,13 @@ using System.Windows;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class MainWindowViewModel : SolutionViewModel
+    public partial class MainWindowViewModel : ObservableRecipient
     {
-        public MainWindowViewModel(IRestaurantsService restaurantsService, IUserService userService)
+        public MainWindowViewModel(IRestaurantsService restaurantsService, IUserService userService, ILoggedInUserServices loggedInUserServices)
         {
             _restaurantsService = restaurantsService;
             _userService = userService;
+            _loggedInUserServices = loggedInUserServices;
 
             CollectionCreator = new();
 
@@ -50,6 +51,7 @@ namespace RestaurantApp.ViewModel
         }
         private readonly IRestaurantsService _restaurantsService;
         private readonly IUserService _userService;
+        private readonly ILoggedInUserServices _loggedInUserServices;
 
         public IRelayCommand<object?> OpenMenuWindowCommand { get; }
         public IRelayCommand OpenRegisterWindowCommand { get; }
@@ -78,6 +80,9 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private string? _inputPassword;
 
+        [ObservableProperty]
+        private bool _isLoggedIn = false;
+
         public CollectionCreator CollectionCreator { get; set; }
 
         public void RefreshRestaurantsCollection()
@@ -87,7 +92,7 @@ namespace RestaurantApp.ViewModel
         
         public void OpenMenuWindow(object? obj)
         {
-            if (!UserValidator.IsLoggedIn(LoggedInUser))
+            if (!UserValidator.IsLoggedIn(_loggedInUserServices.GetUser()))
             {
                 return;
             }
@@ -105,7 +110,7 @@ namespace RestaurantApp.ViewModel
 
         public void OpenAdditionToAdd()
         {
-            if (!UserValidator.IsAdmin(LoggedInUser))
+            if (!UserValidator.IsAdmin(_loggedInUserServices.GetUser()))
             {
                 return;
             }
@@ -115,7 +120,7 @@ namespace RestaurantApp.ViewModel
 
         public void OpenUserListWindow()
         {
-            if (!UserValidator.IsAdmin(LoggedInUser))
+            if (!UserValidator.IsAdmin(_loggedInUserServices.GetUser()))
             {
                 return;
             }
@@ -129,7 +134,7 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            if (!UserValidator.IsAdmin(LoggedInUser))
+            if (!UserValidator.IsAdmin(_loggedInUserServices.GetUser()))
             {
                 return;
             }
@@ -150,13 +155,16 @@ namespace RestaurantApp.ViewModel
                 MessageBox.Show("Błędne hasło");
                 return;
             }
-            LoggedInUser = user;
+            
+            _loggedInUserServices.Login(user);
+            IsLoggedIn = true;
         }
 
         public void Logout()
         {
             InputLogin = null;
-            LoggedInUser = null;
+            _loggedInUserServices.Logout();
+            IsLoggedIn = false;
         }
 
         public void EditRestaurant(Restaurant restaurant)

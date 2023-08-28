@@ -9,12 +9,13 @@ using System.ComponentModel;
 
 namespace RestaurantApp.ViewModel
 {
-    public partial class RestaurantMenuViewModel : SolutionViewModel
+    public partial class RestaurantMenuViewModel : ObservableRecipient
     {
-        public RestaurantMenuViewModel(IDishService dishService, IStatusServices statusServices)
+        public RestaurantMenuViewModel(IDishService dishService, IStatusServices statusServices, ILoggedInUserServices loggedInUserServices)
         {
             _dishService = dishService;
             _statusServices = statusServices;
+            _loggedInUserServices = loggedInUserServices;
             CollectionCreator = new();
 
             AddDishCommand = new RelayCommand(AddDish);
@@ -26,16 +27,18 @@ namespace RestaurantApp.ViewModel
             {
                 RestaurantId = m.Value ?? 0;
 
-                if (LoggedInUser!.Access == "Admin")
+                if (_loggedInUserServices.GetUserAccess() == "Admin")
                 {
                     DishesList = new(_dishService.GetSelected(RestaurantId));
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
                     StatusColumnWidth = "100";
+                    IsAdmin = true;
                 }
                 else
                 {
                     DishesList = new(_dishService.GetSelectedForStandard(RestaurantId));
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
+                    IsAdmin = false;
                 }
             });
 
@@ -48,6 +51,7 @@ namespace RestaurantApp.ViewModel
         }
         private readonly IDishService _dishService;
         private readonly IStatusServices _statusServices;
+        private readonly ILoggedInUserServices _loggedInUserServices;
         CollectionCreator CollectionCreator { get; set; }
 
         public int RestaurantId { get; set; }
@@ -78,6 +82,9 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private ICollectionView? _statusCollection;
 
+        [ObservableProperty]
+        private bool _isAdmin = false;
+
         public void RefreshDishesCollection()
         {
             DishesCollection?.Refresh();
@@ -90,7 +97,7 @@ namespace RestaurantApp.ViewModel
 
         public void AddDish()
         {
-            if (!UserValidator.IsAdmin(LoggedInUser))
+            if (!UserValidator.IsAdmin(_loggedInUserServices.GetUser()))
             {
                 return;
             }
@@ -114,7 +121,7 @@ namespace RestaurantApp.ViewModel
 
         partial void OnStatusColumnWidthChanged(string value)
         {
-            if (!UserValidator.IsAdmin(LoggedInUser))
+            if (!UserValidator.IsAdmin(_loggedInUserServices.GetUser()))
             {
                 StatusColumnWidth = "0";
                 return;

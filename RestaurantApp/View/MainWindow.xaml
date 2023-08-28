@@ -78,24 +78,24 @@
             <StackPanel Margin="5"
                 Orientation="Horizontal">
                 <Label Content="Login:"
-                       Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
+                       Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                    />
                 <TextBox Text="{Binding InputLogin}"
                      Width="100"
                          MaxLength="100"
-                         Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
+                         Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                      />
             </StackPanel>
             <StackPanel Margin="5" 
                         Orientation="Horizontal">
                 <Label Content="Hasło:"
-                       Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
+                       Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                    />
                 <PasswordBox x:Name="PasswordInput"
                              PasswordChar="*"
                              Width="100"
                              MaxLength="500"
-                             Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
+                             Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                              />
             </StackPanel>
             <StackPanel Margin="5"
@@ -106,28 +106,28 @@
                     Width="50"
                     Height="30"
                     Margin="5 0 -50 0"
-                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                     />
                 <Button Content="Logout"
                         Command="{Binding LogoutCommand}"
                         Width="50"
                         Height="30"
                         Margin="0 -150 0 0"
-                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedInButtonVisibility}}"
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedInButtonVisibility}}"
                         />
                 <Button Content="Register"
                     Command="{Binding OpenRegisterWindowCommand}"
                     Width="50"
                     Height="30"
                     Margin="5 0 -50 0"
-                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedOutButtonVisibility}}"
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedOutButtonVisibility}}"
                     />
                 <Button Content="UserList"
                         Command="{Binding OpenUserListWindowCommand}"
                         Width="50"
                         Height="30"
                         Margin="0 -150 0 0"
-                        Visibility="{Binding LoggedInUser, Converter={StaticResource UserLoggedInButtonVisibility}}"
+                        Visibility="{Binding IsLoggedIn, Converter={StaticResource UserLoggedInButtonVisibility}}"
                         />
             </StackPanel>
         </StackPanel>
