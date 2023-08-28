@@ -1,10 +1,4 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using RestaurantApp.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestaurantApp.Model;
 
 namespace RestaurantApp.Services
 {
@@ -20,21 +14,21 @@ namespace RestaurantApp.Services
     {
         public LoggedInUserServices()
         {
-            
+
         }
-        
+
         private User? _loggedInUser;
 
-        public User? LoggedInUser 
-        { 
-            get 
-            { 
-                return _loggedInUser; 
-            } 
-            set 
-            {  
-                _loggedInUser = value; 
-            } 
+        public User? LoggedInUser
+        {
+            get
+            {
+                return _loggedInUser;
+            }
+            set
+            {
+                _loggedInUser = value;
+            }
         }
 
         public User? GetUser()

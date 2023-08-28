@@ -6,6 +6,7 @@ using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -24,13 +25,10 @@ namespace RestaurantApp.ViewModel
             UserList = new ObservableCollection<User>(_userService.GetUsers());
             UserCollection = CollectionCreator.GetCollection(UserList);
 
-            WeakReferenceMessenger.Default.Register<ValuesOfAccessToChangeItInDatabaseMessage>(this, (r, m) =>
+            foreach (User user in UserList)
             {
-                int userId = int.Parse(m.Value[0]);
-                string newAccess = m.Value[1];
-                _userService.UpdateUserAccess(userId, newAccess);
-            });
-
+                user.PropertyChanged += new PropertyChangedEventHandler(User_PropertyChanged);
+            }
         }
         private readonly IUserService _userService;
 
@@ -56,5 +54,27 @@ namespace RestaurantApp.ViewModel
             RefreshUserCollection();
         }
 
+        public void UserList_PropertyChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems is not null)
+            {
+                foreach (Dish dish in e.OldItems)
+                {
+                    dish.PropertyChanged -= new PropertyChangedEventHandler(User_PropertyChanged);
+                }
+            }
+            if (e.NewItems is not null)
+            {
+                foreach (Dish dish in e.NewItems)
+                {
+                    dish.PropertyChanged += new PropertyChangedEventHandler(User_PropertyChanged);
+                }
+            }
+        }
+
+        public void User_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            _userService.UpdateUserAccess();
+        }
     }
 }
