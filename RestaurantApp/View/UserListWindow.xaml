@@ -6,7 +6,7 @@
         xmlns:converter="clr-namespace:RestaurantApp.Converters"
         xmlns:local="clr-namespace:RestaurantApp.View" xmlns:viewmodel="clr-namespace:RestaurantApp.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:UserListWindowViewModel}"
         mc:Ignorable="d"
-        Title="UserListWindow" Height="450" Width="800">
+        Title="Lista użytkowników" Height="350" Width="300">
     <Window.Resources>
         <converter:AccessToIndexAndBackConverter x:Key="AccessToIndexAndBackConverter"/>
     </Window.Resources>

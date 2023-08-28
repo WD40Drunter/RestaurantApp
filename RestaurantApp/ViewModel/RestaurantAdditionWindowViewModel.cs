@@ -27,6 +27,7 @@ namespace RestaurantApp.ViewModel
         public IRelayCommand FinishActionCommand { get; }
         public IRelayCommand CloseWindowCommand { get; }
 
+        [ObservableProperty]
         private Restaurant? _oldEditRestaurant;
 
         [ObservableProperty]
@@ -58,7 +59,7 @@ namespace RestaurantApp.ViewModel
 
         public void AssignRestaurantValuesForEdit(Restaurant restaurant)
         {
-            _oldEditRestaurant = restaurant;
+            OldEditRestaurant = restaurant;
             Name = restaurant.Name;
             Rating = restaurant.Rating.ToString();
             OpeningHour = restaurant.OpeningHour;
@@ -107,7 +108,7 @@ namespace RestaurantApp.ViewModel
                 return;
             }
             Adress adress = new(AdressCountry!, AdressCity!, AdressStreet!, AdressHouseNumber!, AdressPostalCode!);
-            if (_oldEditRestaurant is null)
+            if (OldEditRestaurant is null)
             {
                 AddRestaurant(adress);
             }
@@ -127,8 +128,8 @@ namespace RestaurantApp.ViewModel
 
         public void EditRestaurant(Adress adress)
         {
-            _adressServices.EditAdress(_oldEditRestaurant!.Adress!, adress);
-            Restaurant restaurant = new(Name!, Convert.ToDecimal(Rating!), OpeningHour!, ClosingHour!, _oldEditRestaurant.AdressId);
+            _adressServices.EditAdress(OldEditRestaurant!.Adress!, adress);
+            Restaurant restaurant = new(Name!, Convert.ToDecimal(Rating!), OpeningHour!, ClosingHour!, OldEditRestaurant.AdressId);
             WeakReferenceMessenger.Default.Send(new SendRestaurantEditValueMessage(restaurant));
         }
 
