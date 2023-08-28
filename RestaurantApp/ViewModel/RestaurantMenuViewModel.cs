@@ -7,8 +7,6 @@ using RestaurantApp.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Linq;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace RestaurantApp.ViewModel
 {
@@ -147,7 +145,7 @@ namespace RestaurantApp.ViewModel
                 }
             }
         }
-         
+
         public void Dish_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             _dishService.ChangeStatus();
