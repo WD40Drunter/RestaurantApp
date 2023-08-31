@@ -12,6 +12,7 @@ namespace RestaurantApp.Services
         IEnumerable<Dish> GetSelectedForStandard(int? restaurantId);
         Dish AddDish(Dish dish);
         void ChangeStatus();
+        void DeleteDishes(int restaurantId);
     }
     public class DishService : IDishService
     {
@@ -45,6 +46,12 @@ namespace RestaurantApp.Services
 
         public void ChangeStatus()
         {
+            _context.SaveChanges();
+        }
+
+        public void DeleteDishes(int restaurantId)
+        {
+            _context.Dishes.RemoveRange(_context.Dishes.Where(x => x.RestaurantId == restaurantId));
             _context.SaveChanges();
         }
     }
