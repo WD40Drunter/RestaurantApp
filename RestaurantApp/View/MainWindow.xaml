@@ -70,6 +70,11 @@
                     Command="{Binding EditRestaurantCommand}"
                     Height="30"
                     Width="50"/>
+            <Button Margin="10 0 0 0"
+                    Content="Usuń"
+                    Command="{Binding DeleteRestaurantCommand}"
+                    Height="30"
+                    Width="50"/>
         </StackPanel>
         <StackPanel Orientation="Vertical"
                     Margin="0 30 10 0"

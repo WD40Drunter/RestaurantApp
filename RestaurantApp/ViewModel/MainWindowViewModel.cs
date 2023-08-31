@@ -35,6 +35,7 @@ namespace RestaurantApp.ViewModel
 
             AddRestaurantCommand = new RelayCommand(OpenAdditionToAdd);
             EditRestaurantCommand = new RelayCommand(OpenAddtionToEdit);
+            DeleteRestaurantCommand = new RelayCommand(DeleteRestaurant);
 
             WeakReferenceMessenger.Default.Register<PasswordMessage>(this, (r, m) =>
             {
@@ -66,6 +67,7 @@ namespace RestaurantApp.ViewModel
 
         public IRelayCommand AddRestaurantCommand { get; }
         public IRelayCommand EditRestaurantCommand { get; }
+        public IRelayCommand DeleteRestaurantCommand { get; }
 
         [ObservableProperty]
         private Restaurant? _selectedRestaurant;
@@ -135,16 +137,12 @@ namespace RestaurantApp.ViewModel
 
         public void OpenAddtionToEdit()
         {
-            if (SelectedRestaurant is null)
-            {
-                return;
-            }
-            if (!UserValidator.IsAdmin(_loggedInUserService.GetUser()))
+            if (!CanDeleteOrEdit())
             {
                 return;
             }
             OpenAdditionToAdd();
-            WeakReferenceMessenger.Default.Send(new SendRestaurantToEditMessage(SelectedRestaurant));
+            WeakReferenceMessenger.Default.Send(new SendRestaurantToEditMessage(SelectedRestaurant!));
         }
 
         public void Login()
@@ -187,17 +185,29 @@ namespace RestaurantApp.ViewModel
 
         public void DeleteRestaurant()
         {
-            if (SelectedRestaurant is null)
+            if (!CanDeleteOrEdit())
             {
                 return;
             }
-            int adressId = SelectedRestaurant.AdressId;
-            _dishService.DeleteDishesFromRestaurant(SelectedRestaurant.RestaurantId);
-            _restaurantsService.DeleteRestaurant(SelectedRestaurant.RestaurantId);
-            _adressService.DeleteAdress(adressId);
+            _dishService.DeleteDishes(SelectedRestaurant!.RestaurantId);
+            _restaurantsService.DeleteRestaurant(SelectedRestaurant);
+            _adressService.DeleteAdress(SelectedRestaurant.AdressId);
             RestaurantsList!.Remove(SelectedRestaurant);
 
             RefreshRestaurantsCollection();
+        }
+
+        public bool CanDeleteOrEdit()
+        {
+            if (SelectedRestaurant is null)
+            {
+                return false;
+            }
+            if (!UserValidator.IsAdmin(_loggedInUserService.GetUser()))
+            {
+                return false;
+            }
+            return true;
         }
 
         partial void OnSearchRestaurantValueChanged(string? value)
