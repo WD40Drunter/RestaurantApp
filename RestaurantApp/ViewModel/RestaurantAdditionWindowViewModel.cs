@@ -16,11 +16,6 @@ namespace RestaurantApp.ViewModel
 
             FinishActionCommand = new RelayCommand(FinishAction);
             CloseWindowCommand = new RelayCommand(CloseWindow);
-
-            WeakReferenceMessenger.Default.Register<SendRestaurantToEditMessage>(this, (r, m) =>
-            {
-                AssignRestaurantValuesForEdit(m.Value);
-            });
         }
         private readonly IAdressServices _adressServices;
 
@@ -57,18 +52,21 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private string? _adressPostalCode;
 
-        public void AssignRestaurantValuesForEdit(Restaurant restaurant)
+        public void AssignRestaurantValuesForEdit()
         {
-            OldEditRestaurant = restaurant;
-            Name = restaurant.Name;
-            Rating = restaurant.Rating.ToString();
-            OpeningHour = restaurant.OpeningHour;
-            ClosingHour = restaurant.ClosingHour;
-            AdressCountry = restaurant.Adress!.Country;
-            AdressCity = restaurant.Adress!.City;
-            AdressStreet = restaurant.Adress!.Street;
-            AdressHouseNumber = restaurant.Adress!.HouseNumber;
-            AdressPostalCode = restaurant.Adress!.PostalCode;
+            if( OldEditRestaurant is null)
+            {
+                return;
+            }
+            Name = OldEditRestaurant.Name;
+            Rating = OldEditRestaurant.Rating.ToString();
+            OpeningHour = OldEditRestaurant.OpeningHour;
+            ClosingHour = OldEditRestaurant.ClosingHour;
+            AdressCountry = OldEditRestaurant.Adress!.Country;
+            AdressCity = OldEditRestaurant.Adress!.City;
+            AdressStreet = OldEditRestaurant.Adress!.Street;
+            AdressHouseNumber = OldEditRestaurant.Adress!.HouseNumber;
+            AdressPostalCode = OldEditRestaurant.Adress!.PostalCode;
         }
 
         public bool IsEverythingWellInputed()
@@ -136,6 +134,11 @@ namespace RestaurantApp.ViewModel
         public void CloseWindow()
         {
             WeakReferenceMessenger.Default.Send(new RestaurantAdditionCloseWindowMessage());
+        }
+
+        partial void OnOldEditRestaurantChanged(Restaurant? value)
+        {
+            AssignRestaurantValuesForEdit();
         }
     }
 }

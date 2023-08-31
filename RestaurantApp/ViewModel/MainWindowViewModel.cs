@@ -120,7 +120,7 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            RestaurantAddittonWindow restaurantAddittonWindow = new();
+            RestaurantAddittonWindow restaurantAddittonWindow = new(null);
             restaurantAddittonWindow.Show();
         }
 
@@ -140,14 +140,14 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            OpenAdditionToAdd();
-            WeakReferenceMessenger.Default.Send(new SendRestaurantToEditMessage(SelectedRestaurant!));
+            RestaurantAddittonWindow restaurantAddittonWindow = new(SelectedRestaurant!);
+            restaurantAddittonWindow.Show();
         }
 
         public void Login()
         {
             User? user = _userService.GetUser(InputLogin!);
-            if (user == null)
+            if (user is null)
             {
                 MessageBox.Show("Błędny login");
                 return;
