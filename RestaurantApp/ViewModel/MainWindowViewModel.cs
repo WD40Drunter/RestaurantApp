@@ -157,7 +157,6 @@ namespace RestaurantApp.ViewModel
                 MessageBox.Show("Błędne hasło");
                 return;
             }
-            
             _loggedInUserService.Login(user);
             IsLoggedIn = true;
         }
@@ -172,7 +171,6 @@ namespace RestaurantApp.ViewModel
         public void EditRestaurant(Restaurant restaurant)
         {
             _restaurantsService.EditRestaurant(SelectedRestaurant!, restaurant);
-
             RefreshRestaurantsCollection();
         }
 
