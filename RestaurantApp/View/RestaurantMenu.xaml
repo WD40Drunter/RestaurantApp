@@ -10,6 +10,7 @@
     <Window.Resources>
         <converters:SubstractOneOrAddOneConverter x:Key="SubstractOneOrAddOneConverter"/>
         <converters:IsAdminToVisibilityConverter x:Key="IsAdminToVisibilityConverter"/>
+        <converters:IsAdminToWidthConverter x:Key="IsAdminToWidthConverter"/>
     </Window.Resources>
     <Grid>
         <ListView ItemsSource="{Binding DishesCollection}">
@@ -18,7 +19,7 @@
                     <GridViewColumn Header="Nazwa dania"
                                     DisplayMemberBinding="{Binding Name}"
                                     />
-                    <GridViewColumn Width="{Binding StatusColumnWidth, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                    <GridViewColumn Width="{Binding IsAdmin, Converter={StaticResource IsAdminToWidthConverter}}"
                                     >
                         <GridViewColumnHeader Content="Status"
                                               Visibility="{Binding IsAdmin, Converter={StaticResource IsAdminToVisibilityConverter}}"/>

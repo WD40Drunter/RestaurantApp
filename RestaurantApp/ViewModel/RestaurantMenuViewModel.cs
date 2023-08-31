@@ -37,7 +37,6 @@ namespace RestaurantApp.ViewModel
                     }
                     DishesList.CollectionChanged += new NotifyCollectionChangedEventHandler(DishesList_PropertyChanged);
                     DishesCollection = CollectionCreator.GetCollection(DishesList);
-                    StatusColumnWidth = "100";
                     IsAdmin = true;
                 }
                 else
@@ -56,9 +55,6 @@ namespace RestaurantApp.ViewModel
         public int RestaurantId { get; set; }
 
         public IRelayCommand AddDishCommand { get; }
-
-        [ObservableProperty]
-        private string _statusColumnWidth = "0";
 
         [ObservableProperty]
         private ObservableCollection<Dish>? _dishesList;
@@ -116,16 +112,6 @@ namespace RestaurantApp.ViewModel
         {
             CollectionCreator.SearchDishValue = value;
             RefreshDishesCollection();
-        }
-
-        partial void OnStatusColumnWidthChanged(string value)
-        {
-            if (!UserValidator.IsAdmin(_loggedInUserServices.GetUser()))
-            {
-                StatusColumnWidth = "0";
-                return;
-            }
-            StatusColumnWidth = value;
         }
 
         public void DishesList_PropertyChanged(object? sender, NotifyCollectionChangedEventArgs e)
