@@ -7,6 +7,7 @@ using RestaurantApp.Services;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace RestaurantApp.ViewModel
 {
@@ -20,39 +21,11 @@ namespace RestaurantApp.ViewModel
             CollectionCreator = new();
 
             AddDishCommand = new RelayCommand(AddDish);
-
-            StatusList = new(_statusServices.GetAll());
-            StatusCollection = CollectionCreator.GetCollection(StatusList);
-
-            WeakReferenceMessenger.Default.Register<RestaurantIdMessage>(this, (r, m) =>
-            {
-                RestaurantId = m.Value ?? 0;
-
-                if (_loggedInUserServices.GetUserAccess() == "Admin")
-                {
-                    DishesList = new(_dishService.GetSelected(RestaurantId));
-                    foreach (Dish dish in DishesList)
-                    {
-                        dish.PropertyChanged += new PropertyChangedEventHandler(Dish_PropertyChanged);
-                    }
-                    DishesList.CollectionChanged += new NotifyCollectionChangedEventHandler(DishesList_PropertyChanged);
-                    DishesCollection = CollectionCreator.GetCollection(DishesList);
-                    IsAdmin = true;
-                }
-                else
-                {
-                    DishesList = new(_dishService.GetSelectedForStandard(RestaurantId));
-                    DishesCollection = CollectionCreator.GetCollection(DishesList);
-                    IsAdmin = false;
-                }
-            });
         }
         private readonly IDishService _dishService;
         private readonly IStatusServices _statusServices;
         private readonly ILoggedInUserServices _loggedInUserServices;
         CollectionCreator CollectionCreator { get; set; }
-
-        public int RestaurantId { get; set; }
 
         public IRelayCommand AddDishCommand { get; }
 
@@ -80,6 +53,36 @@ namespace RestaurantApp.ViewModel
         [ObservableProperty]
         private bool _isAdmin = false;
 
+        [ObservableProperty]
+        private int? _restaurantId = null;
+
+        public void GetStatusListAndCollection()
+        {
+            StatusList = new(_statusServices.GetAll());
+            StatusCollection = CollectionCreator.GetCollection(StatusList);
+        }
+
+        public void GetDishesListAndCollection()
+        {
+            if (_loggedInUserServices.GetUserAccess() == "Admin")
+            {
+                DishesList = new(_dishService.GetSelected(RestaurantId));
+                foreach (Dish dish in DishesList)
+                {
+                    dish.PropertyChanged += new PropertyChangedEventHandler(Dish_PropertyChanged);
+                }
+                DishesList.CollectionChanged += new NotifyCollectionChangedEventHandler(DishesList_PropertyChanged);
+                DishesCollection = CollectionCreator.GetCollection(DishesList);
+                IsAdmin = true;
+            }
+            else
+            {
+                DishesList = new(_dishService.GetSelectedForStandard(RestaurantId));
+                DishesCollection = CollectionCreator.GetCollection(DishesList);
+                IsAdmin = false;
+            }
+        }
+
         public void RefreshDishesCollection()
         {
             DishesCollection?.Refresh();
@@ -100,7 +103,7 @@ namespace RestaurantApp.ViewModel
             {
                 return;
             }
-            Dish dish = new(Name!, 1, RestaurantId);
+            Dish dish = new(Name!, 1, RestaurantId ?? 0);
 
             DishesList?.Add(_dishService.AddDish(dish));
 
@@ -135,6 +138,11 @@ namespace RestaurantApp.ViewModel
         public void Dish_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             _dishService.ChangeStatus();
+        }
+
+        partial void OnRestaurantIdChanged(int? value)
+        {
+            GetDishesListAndCollection();
         }
     }
 }
