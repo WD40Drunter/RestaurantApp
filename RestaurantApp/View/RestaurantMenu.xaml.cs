@@ -12,12 +12,11 @@ namespace RestaurantApp.View
     /// </summary>
     public partial class RestaurantMenu : Window
     {
-        public RestaurantMenu()
+        public RestaurantMenu(int restaurantId)
         {
             InitializeComponent();
-
             DataContext = Ioc.Default.GetRequiredService<RestaurantMenuViewModel>();
-
+            ((RestaurantMenuViewModel)DataContext).RestaurantId = restaurantId;
         }
 
     }

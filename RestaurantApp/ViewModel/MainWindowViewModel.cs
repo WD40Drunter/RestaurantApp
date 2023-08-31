@@ -104,9 +104,8 @@ namespace RestaurantApp.ViewModel
                 return;
             }
             Restaurant? restaurant = obj as Restaurant;
-            RestaurantMenu restaurantMenu = new();
+            RestaurantMenu restaurantMenu = new(restaurant!.RestaurantId);
             restaurantMenu.Show();
-            WeakReferenceMessenger.Default.Send(new RestaurantIdMessage(restaurant?.RestaurantId));
         }
 
         public static void OpenRegisterWindow()
