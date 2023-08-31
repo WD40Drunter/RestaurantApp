@@ -14,6 +14,7 @@ namespace RestaurantApp.Services
         void ChangeStatus();
         void DeleteDishes(int restaurantId);
     }
+
     public class DishService : IDishService
     {
         public DishService(Context context)
@@ -21,6 +22,7 @@ namespace RestaurantApp.Services
             _context = context;
         }
         private readonly Context _context;
+        private const int _avaiableStatusId = 1;
 
         public IEnumerable<Dish> GetAll()
         {
@@ -34,7 +36,9 @@ namespace RestaurantApp.Services
 
         public IEnumerable<Dish> GetSelectedForStandard(int? restaurantId)
         {
-            return _context.Dishes.Where(x => x.RestaurantId == restaurantId && x.StatusId == 1).Include(x => x.Restaurant);
+            return _context.Dishes
+                .Where(x => x.RestaurantId == restaurantId && x.StatusId == _avaiableStatusId)
+                .Include(x => x.Restaurant);
         }
 
         public Dish AddDish(Dish dish)
@@ -51,7 +55,7 @@ namespace RestaurantApp.Services
 
         public void DeleteDishes(int restaurantId)
         {
-            _context.Dishes.RemoveRange(_context.Dishes.Where(x => x.RestaurantId == restaurantId));
+            _context.Dishes.Where(x => x.RestaurantId == restaurantId).ExecuteDelete();
             _context.SaveChanges();
         }
     }
